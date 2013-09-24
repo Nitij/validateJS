@@ -1,5 +1,4 @@
-; (function (jQuery, w, undefined) {
-    var $ = jQuery;
+; (function ($, w, undefined) {
     //Validation manager object
     var validationManager = function () {
         this._validators = new Object();
@@ -54,6 +53,7 @@
                         validateFunc = validateCustom;
                         break;
                 }
+
                 isValid = validateFunc(controlValue, rule);
                 if (!isValid) {
                     validatorPassed = false;
@@ -84,34 +84,24 @@
         this.notifyFail = function (validatorName) {
             var notificationControl = null;
             var sourceControl = null;
-            var top = null, left = null;
 
             notificationControl = $("div[validator='" + validatorName + "']");
             sourceControl = $("*[validatorName='" + validatorName + "']");
-            top = sourceControl.offset().top;
-            left = sourceControl.offset().left + sourceControl.outerWidth();
             //we will check for each notification type and will apply them
             if (notificationControl.length > 0 && sourceControl.length > 0) {
                 $("#imgFail" + validatorName).css("display", "inline");
-                notificationControl.css("top", top);
-                notificationControl.css("left", left);
             }
         };
         //Function to show notifications for validation passes
         this.notifyPass = function (validatorName) {
             var notificationControl = null;
             var sourceControl = null;
-            var top = null, left = null;
 
             notificationControl = $("div[validator='" + validatorName + "']");
             sourceControl = $("*[validatorName='" + validatorName + "']");
-            top = sourceControl.offset().top;
-            left = sourceControl.offset().left + sourceControl.outerWidth();
             //we will check for each notification type and will apply them
             if (notificationControl.length > 0 && sourceControl.length > 0) {
                 $("#imgPass" + validatorName).css("display", "inline");
-                notificationControl.css("top", top);
-                notificationControl.css("left", left);
             }
         };
         //function to reset tooltips
@@ -149,26 +139,6 @@
                 this._tooltipJS.applyTooltip(control, content, 5, true);
             }
         };
-        //reposition notification image div on window resize
-        this.repositionNotifications = function () {
-            var notificationControl = null, sourceControl = null;;
-            var validatorName = null;
-            var validators = this._validatorNames;
-            var top = null, left = null;
-            var i = 0;
-
-            for (; i < validators.length; i++) {
-                validatorName = this._validators[validators[i]]._name;
-                notificationControl = $("div[validator='" + validatorName + "']");
-                sourceControl = $("*[validatorName='" + validatorName + "']");
-                if (notificationControl.length > 0 && sourceControl.length > 0) {
-                    top = sourceControl.offset().top;
-                    left = sourceControl.offset().left + sourceControl.outerWidth();
-                    notificationControl.css("top", top);
-                    notificationControl.css("left", left);
-                }                
-            }
-        };
         return this;
     };
     validationManager.prototype = {
@@ -177,21 +147,17 @@
             var imgFail = null, imgPass = null;
             var validatorName = null;
             var validators = this._validatorNames;
-            var resizeEventDelegate = $.proxy(this.repositionNotifications, this);
             var i = 0;
-
-            $(w).resize(resizeEventDelegate);
 
             //lets preload the fail and pass images for all validators
             //if applicable
-
             //Fail Image
             if (this._showFailImgNotification === true) {
                 for (; i < validators.length; i++) {
                     validatorName = this._validators[validators[i]]._name;
                     notificationControl = $("div[validator='" + validatorName + "']");
                     if (notificationControl.length > 0) {
-                        imgFail = $("#imgPass" + validatorName);
+                        imgFail = $("#imgFail" + validatorName);
                         if (!(imgFail.length > 0)) {
                             imgFail = document.createElement("img");
                             imgFail.setAttribute("id", "imgFail" + validatorName);
@@ -201,7 +167,7 @@
                         imgFail.css("display", "none");
                         imgFail.css("position", "absolute");
                         imgFail.attr("src", this._failImage);
-                        notificationControl.css("position", "absolute");
+                        notificationControl.css("display", "inline");
                     }
                 }
             }
@@ -222,7 +188,7 @@
                         imgPass.css("display", "none");
                         imgPass.css("position", "absolute");
                         imgPass.attr("src", this._passImage);
-                        notificationControl.css("position", "absolute");
+                        notificationControl.css("display", "inline");
                     }
                 }
             }
