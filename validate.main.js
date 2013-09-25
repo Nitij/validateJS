@@ -3,18 +3,19 @@
     var validationManager = function () {
         this._validators = new Object();
         this._validatorNames = [];
-        this._validationResult = [];
-        this._passImgae = null;
-        this._failImage = null;
-        this._showFailImgNotification = false;
+        this._passImage = "./validateJSImages/Passed/Button-Check-icon32pixel.png";
+        this._failImage = "./validateJSImages/Failed/Button-stop-icon(3).png";
+        this._showFailImgNotification = true;
         this._showPassImgNotification = false;
-        this._showFailToolTips = false;
+        this._showFailToolTips = true;
         this._toolTipCssClass = null;
+        this._validateOnTextChange = false;
         this._tooltipJS = new toolTipJS();
         
         //adds a failed validation to the validation results list
         this.addFailedValidation = function (validatorName, inputControl, type, message) {
-            this._validationResult.push(new validatorResult(validatorName, inputControl, type, message));
+            this._validators[validatorName]._failedMessages
+                .push(new validatorResult(validatorName, inputControl, type, message));
         };
         ///Function to validate a particular validator
         this.v = function (validatorName) {
@@ -29,6 +30,9 @@
             var params = this._validators[validatorName]._params;
             var i = 0, j = 0;
             var failedCount = null;
+
+            //lets first clear the current failed validation messages
+            this._validators[validatorName]._failedMessages = [];
             for (; i < params.length; i++) {
                 type = params[i].type;
                 rule = params[i].rule;
@@ -69,14 +73,8 @@
             var notificationControl = null;
             notificationControl = $("div[validator='" + validatorName + "']");
             if (notificationControl.length > 0) {
-                if (this._showFailImgNotification === true) {
-                    $("#imgFail" + validatorName).css("display", "none");
-                }
-
-                if (this._showPassImgNotification === true) {
-                    $("#imgPass" + validatorName).css("display", "none");
-                }               
-                
+                $("#imgFail" + validatorName).css("display", "none");
+                $("#imgPass" + validatorName).css("display", "none");
                 this._validators[validatorName]._isNotified = false;
             }
         };
@@ -115,26 +113,25 @@
         };
         //Function to apply popup tootip
         this.applyTooltip = function (validatorName) {
-            var msgList = [];
+            var msgList = this._validators[validatorName]._failedMessages;
             var control = null;
             var top = null;
             var left = null;
             var divToolTip = null;
-            var content = "";
+            var content = [];
             var i = 0;
             control = $("div[validator='" + validatorName + "']");
             if (control.length > 0) {
-                for (; i < this._validationResult.length; i++) {
-                    if (this._validationResult[i].validatorName === validatorName) {
-                        msgList.push(this._validationResult[i].message);
-                    }
-                }
-
+                content.push("<table>");
                 i = 0;
                 //lets build our tooltip content
                 for (; i < msgList.length; i++) {
-                    content += "# " + msgList[i] + "<br/>";
+                    content.push("<tr><td>");
+                    content.push(msgList[i].message);
+                    content.push("</td></tr>");
                 }
+                content.push("</table>")
+                content = content.join("");
 
                 this._tooltipJS.applyTooltip(control, content, 5, true);
             }
@@ -148,6 +145,7 @@
             var validatorName = null;
             var validators = this._validatorNames;
             var i = 0;
+            var changeEventDelegate = null; //reusable delegate
 
             //lets preload the fail and pass images for all validators
             //if applicable
@@ -172,7 +170,7 @@
                 }
             }
             //Pass Image
-            i = 0;
+            i = 0; 
             if (this._showPassImgNotification === true) {
                 for (; i < validators.length; i++) {
                     validatorName = this._validators[validators[i]]._name;
@@ -190,6 +188,17 @@
                         imgPass.attr("src", this._passImage);
                         notificationControl.css("display", "inline");
                     }
+                }
+            }
+
+            //validate on change event if validateOnTextChange is true
+            i = 0; debugger;
+            if (this._validateOnTextChange === true) {
+                for (; i < validators.length; i++) {
+                    validatorName = this._validators[validators[i]]._name;
+                    inputControl = $("*[validatorName = '" + validatorName + "']");
+                    changeEventDelegate = $.proxy(this.validate, this);
+                    inputControl.change({ validatorList: [validatorName] }, changeEventDelegate);
                 }
             }
             return this;
@@ -220,14 +229,26 @@
             return this;
         },
         getValidationResults: function () {
-            return this._validationResult;
+            debugger;
+            var results = [];
+            var validators = this._validatorNames;
+            var i = 0;
+            for (; i < validators.length; i++) {
+                $.merge(results, this._validators[validators[i]]._failedMessages);
+            }
+            return results;
         },
         validate: function (validatorList) {
+            debugger;
             var isValid = true;
             var validatorName = null;
             var validatorPassed = true;
-            this._validationResult = [];
             var i = 0;
+
+            if (validatorList.type && validatorList.type === "change") {
+                validatorList = validatorList.data.validatorList;
+            }
+
             for (; i < validatorList.length; i++) {
                 validatorName = validatorList[i];
                 //first reset all the notifications and tooltips for this validator
@@ -252,10 +273,11 @@
                         this.notifyPass(validatorName);
                     }                   
                 }
+                if (isValid === true && this._validators[validatorName]._failedMessages.length > 0) { //we have a failed validation
+                    isValid = false;
+                }
             }
-            if (this._validationResult.length > 0) { //we have a failed validation
-                isValid = false;
-            }
+            
             return isValid;
         },
         validateAll: function () {
@@ -275,6 +297,10 @@
         },
         removeValidator: function (validatorName) {
             //not implemented
+        },
+        validateOnTextChange: function (f) {
+            this._validateOnTextChange = f;
+            return this;
         }
     };
 
@@ -337,6 +363,7 @@
         this._name = name;
         this._params = params;
         this._isNotified = false;
+        this._failedMessages = [];
     };
     //validationResult object
     var validatorResult = function (validatorName, sourceControl, type, message) {
