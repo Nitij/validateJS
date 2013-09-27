@@ -133,7 +133,7 @@
                 content.push("</table>")
                 content = content.join("");
 
-                this._tooltipJS.applyTooltip(control, content, 5, true);
+                this._tooltipJS.applyTooltip(control, content, 8, false);
             }
         };
         return this;
@@ -192,7 +192,7 @@
             }
 
             //validate on change event if validateOnTextChange is true
-            i = 0; debugger;
+            i = 0;
             if (this._validateOnTextChange === true) {
                 for (; i < validators.length; i++) {
                     validatorName = this._validators[validators[i]]._name;
@@ -229,7 +229,6 @@
             return this;
         },
         getValidationResults: function () {
-            debugger;
             var results = [];
             var validators = this._validatorNames;
             var i = 0;
@@ -239,7 +238,6 @@
             return results;
         },
         validate: function (validatorList) {
-            debugger;
             var isValid = true;
             var validatorName = null;
             var validatorPassed = true;
@@ -413,21 +411,33 @@
         //distance = Distance between the tooltip and the source control.
         //*************
         this.applyTooltip = function (sourceControl, content, distance, showAtPointer) {
-            var divToolTip = null;
+            debugger;
+            var divToolTip = null, divToolTipTriangle = null;
             var showTooltipDelegate = null;
             var hideTooltipDelegate = null;
             //var sourceControl = $("#" + sourceControlId);
             var params = null;
             divToolTip = $("#divToolTip");
+            divToolTipTriangle = $("#divToolTipTriangle");
 
             //create our tooltip div if not already present
             if (!(divToolTip.length > 0)) {
+                //add divToolTip
                 divToolTip = document.createElement("div");
                 divToolTip.setAttribute("id", "divToolTip");
                 $("body").append(divToolTip);
                 divToolTip = $("#divToolTip");
                 divToolTip.css("position", "absolute");
                 divToolTip.css("display", "none");
+                divToolTip.css("max-width", "250px");
+
+                //add divToolTip arrow
+                divToolTipTriangle = document.createElement("div");
+                divToolTipTriangle.setAttribute("id", "divToolTipTriangle");
+                $("body").append(divToolTipTriangle);
+                divToolTipTriangle = $("#divToolTipTriangle");
+                divToolTipTriangle.css("position", "absolute");
+                divToolTipTriangle.css("display", "none");
             }
 
             //delegate to change the calling context to our toolTipJS object
@@ -456,41 +466,65 @@
     //the tooltip div.
     //*************
     function showToolTip(e) {
+        debugger;
         var i = 0;
         var showAtPointer = e.data.showAtPointer;
         var sourceControl = e.data.sourceControl;
         var content = e.data.content;
+        var divToolTip = $("#divToolTip");
+        var divToolTipTriangle = $("#divToolTipTriangle");
         var targetLeft = null, targetTop = null; //top and left of the tooltip div
+        var tooltipHeight = null, tooltipWidth = null;
+        var srcWidth = sourceControl[0].firstChild.clientWidth;
+        var srcHeight = sourceControl[0].firstChild.clientHeight;
         var top = sourceControl.offset().top;
         var left = sourceControl.offset().left;
-        var right = sourceControl.offset().left + sourceControl.outerWidth();
-        var bottom = sourceControl.offset().top + sourceControl.outerHeight();
-        var divToolTip = $("#divToolTip");
+        var right = sourceControl.offset().left + srcWidth;
+        var bottom = sourceControl.offset().top + srcHeight;
+        
+        
         var distance = e.data.distance;
 
-        if (showAtPointer === true) {
-            left = right = e.pageX;
-            top = bottom = e.pageY;
-        }
+        //remove any previous class
+        divToolTip.removeClass(); 
+        divToolTipTriangle.removeClass();
 
-        divToolTip.removeClass(); //remove any previous class
         //reset top and left
         if (this.inside === false) {
             divToolTip.css("top", 0);
             divToolTip.css("left", 0);
         }
         divToolTip.html(content); //set the tooltip content
-        
-        //show the tooltip at the top right
+        //set the tooltip class
         divToolTip.addClass(this.className);
-        targetLeft = right + distance;
-        targetTop = top;
-                                
+        tooltipHeight = divToolTip.outerHeight();
+        tooltipWidth = divToolTip.outerWidth();
+        if (showAtPointer === true) {
+            left = right = e.pageX;
+            top = bottom = e.pageY;
+        }
+        else {
+            targetTop = (top + (srcHeight / 2)) - (tooltipHeight / 2);            
+            targetTop -= 4; //adjusting top
+            if (($(window).width() - right) > 40) { //right position for tooltip
+                targetLeft = right + distance;
+                divToolTipTriangle.addClass("toolTipArrowLeft");
+                divToolTipTriangle.css("left", right - 8);
+            }
+            else { //else left position for tooltip
+                targetLeft = left - divToolTip.outerWidth() - distance;
+                divToolTipTriangle.addClass("toolTipArrowRight");
+                divToolTipTriangle.css("left", left - 8);
+            }
+            divToolTipTriangle.css("top", (targetTop + (tooltipHeight / 2)) - 8);
+        }
+        
         //apply the top and left for the tooltip div
         divToolTip.css("top", targetTop);
         divToolTip.css("left", targetLeft);
         if (this.inside === false) {
             divToolTip.css("display", "block");
+            divToolTipTriangle.css("display", "block");
             this.inside = true;
         }
     }
@@ -501,6 +535,7 @@
     function hideTooltip() {
         this.inside = false;
         $("#divToolTip").css("display", "none");
+        $("#divToolTipTriangle").css("display", "none");
     };
     //we only need this tooltip library for internal validation use
     //w["ToolTipJS"] = toolTipJS;
