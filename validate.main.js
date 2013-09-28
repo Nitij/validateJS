@@ -3,8 +3,8 @@
     var validationManager = function () {
         this._validators = new Object();
         this._validatorNames = [];
-        this._passImage = "./validateJSImages/Passed/Button-Check-icon32pixel.png";
-        this._failImage = "./validateJSImages/Failed/Button-stop-icon(3).png";
+        this._passImage = "./validateJSImages/Passed/check-icon32pixel.png";
+        this._failImage = "./validateJSImages/Failed/delete-icon32pixel.png";
         this._showFailImgNotification = true;
         this._showPassImgNotification = false;
         this._showFailToolTips = true;
@@ -509,7 +509,7 @@
             if (($(window).width() - right) > 40) { //right position for tooltip
                 targetLeft = right + distance;
                 divToolTipTriangle.addClass("toolTipArrowLeft");
-                divToolTipTriangle.css("left", right - 8);
+                divToolTipTriangle.css("left", right - 7);
             }
             else { //else left position for tooltip
                 targetLeft = left - divToolTip.outerWidth() - distance;
