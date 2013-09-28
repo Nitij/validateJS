@@ -1,9 +1,528 @@
 <!doctype html>
 <html>
-  <head>
-    <title>ValidateJS</title>
-  </head>
-  <body>
-    This page is still under construction, sorry :(
-  </body>
+<head>
+    <title>validateJS</title>
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="validateJS/validate.main.js"></script>
+    <style type="text/css">
+        .divMain {
+            text-align:center;
+        }
+        .regularTable {
+            width:80%;
+            text-align:left;
+            border:1px solid black;
+            margin-left: auto;
+            margin-right: auto; 
+            -moz-border-radius: 16px;
+            -webkit-border-radius: 16px;
+            border-radius: 16px;   
+            padding:10px;    
+        }
+        pre {
+            font-size: 100%;
+            white-space: pre; 
+            white-space: pre-wrap; 
+            white-space: -moz-pre-wrap; 
+            white-space: -o-pre-wrap; 
+            width: auto;
+            display: block;
+            clear: both;
+            color: #555555;
+            background: #f4f4f4;
+            border: solid 1px #e1e1e1
+        } 
+        code { 
+            font-size: 100%;
+            font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+            display: inline; 
+            color: #555555;
+            padding: 1em 1em;
+            background: #f4f4f4;
+        }
+        .extraLargeSpan {
+            font-size:x-large;
+            font-family:Georgia;
+        }
+        .largerSpan {
+            font-size:larger;
+            font-family:Georgia;
+            text-align:left;
+        }
+        .LightLargerSpan {
+            font-weight:500;
+            font-size:medium;
+            font-family:Georgia;
+            text-align:left;
+        }
+        .demoLabel {
+            font-family:Arial;
+            font-size:large;
+        }        
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <img src="validateJS.png" />
+    </div>
+    <hr />
+    <div id="divMain" class="divMain">
+        <span class="extraLargeSpan">
+            validateJS is a lightweight javascript library that helps to easily setup a variety of client side 
+            validations
+        </span>
+        <br /><br />
+        <br /><br />
+        <span class="largerSpan">
+            This library cuts short your coding time to set up all those pesky validations via javascript
+             which cannot be ignored and are essential for any input form. Lets go through all those 
+            validations one by one.
+        </span>
+        <br />
+        <span class="largerSpan">
+            With the default settings of this library you really just need to initialize the library to
+            add the various validators to your form elements.
+        </span>
+        <br />
+        <span class="largerSpan">
+            Let us move forward and see what this library can do without wasting any more time.
+        </span>
+        <br /><br />
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">
+                        Initializing the Library:
+                    </span>
+                    
+                    <br /><br />
+                    <span class="LightLargerSpan">
+                        To initialize the validateJS library, add the references to jQuery and validateJS scripts,
+                         and then create a ValidationManager object in your page load event. Most of the methods 
+                        can be chained to save typing more code.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <pre>
+var vManager = new ValidationManager()
+    .addValidator(["amount"], [{ type: ValidationType.Required, message: "Amount is required." }])
+    .initialize();
+                    </pre>
+                    <span class="LightLargerSpan">
+                        Always remember to initialize your validation manager object.
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <span class="extraLargeSpan">
+            On to the validations...
+        </span>
+        <br />
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">
+                        Setting up the markup:
+                    </span>
+                    <br /><br />
+                    <span class="LightLargerSpan">
+                        Some specific attributes are need to be added to the input fields, apart from that 
+                        we need to &lt;div&gt; tags to show the validation notifications.<br />
+                        Here is how this is done:
+                    </span>
+                    <br /><br />
+                    <span class="LightLargerSpan">
+                        Input element
+                    </span>
+                    <pre>
+&lt;input id ="txtAmount" maxlength="20" validatorName ="amount"/&gt;
+                    </pre>
+                    <br />
+                    <span class="LightLargerSpan">
+                        Display validator(this has to be near to the target input element)
+                    </span>
+                    <pre>
+&lt;div validator = "amount"&gt;&lt;/&lt;div&gt;
+                    </pre>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <span class="extraLargeSpan">
+            Lets have some fun shall we...
+        </span>
+
+
+
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                    Required Field Validation
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName], [{ type: ValidationType.Required, message: messageText }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["name"], [{ type: ValidationType.Required, message: "Please enter your name." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rule : A value is required.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Please Enter Your Name:&nbsp;
+                </span>
+                <input id ="txtName" maxlength="20" validatorName ="name"/>
+                &nbsp;<div validator="name"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateName1(); return true;"/>
+                <div id="name1Sumamry"></div>
+            </td>
+        </tr>
+        </table>
+
+
+    <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                    Compare Validation
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.Compare
+                    , rule: { compareType: <i>compareType</i>, value: <i>value</i> }, message: <i>messageText</i> }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["salary"]
+                    , [{ type: ValidationType.Compare
+                    , rule: { compareType: CompareType.LessThanEqual, value: 100 }
+                    , message: "Salary should be less than or equal to $100." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rule : Value must be less than or equal to 100.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter the Salary You Want:&nbsp;
+                </span>
+                <input id ="txtSalary1" maxlength="20" validatorName ="salary1"/>
+                &nbsp;<div validator="salary1"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateSalary1(); return true;"/>
+                <div id="salary1Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
+
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                    Range Validation
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.Range, rule: [<i>minValue</i>, <i>maxValue</i>]
+                    , message: <i>messageText</i> }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["salary"]
+                    , [type: ValidationType.Range
+                    , rule: [1000, 2000]
+                    , message: "Salary should be between $1000 and $2000." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rule : Value must be between 1000 and 2000.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter the Salary You Want:&nbsp;
+                </span>
+                <input id ="txtSalary2" maxlength="20" validatorName ="salary2"/>
+                &nbsp;<div validator="salary2"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateSalary2(); return true;"/>
+                <div id="salary2Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                    Regular Expression Validation
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.RegularExpression, rule: <i>regularExpression</i>
+                    , message: <i>messageText</i> }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
+vManager.addValidator(["email"]
+                    , [type: ValidationType.RegularExpression
+                    , rule: emailRegExp
+                    , message: "The email id that you entered does not seem to be correct." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rule : Text entered should be an email id in correct format.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter Your Email Id:&nbsp;
+                </span>
+                <input id ="txtEmail" maxlength="20" validatorName ="email"/>
+                &nbsp;<div validator="email"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateEmail1(); return true;"/>
+                <div id="email1Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                    Custom Validation
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
+                    , message: <i>messageText</i> }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["salary"]
+                    , [type: ValidationType.Custom
+                    , rule: CustomSalaryValidation
+                    , message: "Salary should be in multiples of 100." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rule : Value should be a multiple of 100.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter the Salary You Want:&nbsp;
+                </span>
+                <input id ="txtSalary3" maxlength="20" validatorName ="salary3"/>
+                &nbsp;<div validator="salary3"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateSalary3(); return true;"/>
+                <div id="salary3Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                   Multiple Validations
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
+                    , message: <i>messageText</i> }, ...])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["salary"], [{ type: ValidationType.Required
+                    , message: "Salary cannot be blank." },
+                    { type: ValidationType.Range
+                    , rule: [1000, 2000]
+                    , message: "Salary should be between $1000 and $2000." },
+                    { type: ValidationType.Custom
+                    , rule: CustomSalaryValidation
+                    , message: "Salary should be in multiples of 100." }])
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    Rules:<br />
+                    &nbsp;Value is required.<br />
+                    &nbsp;Value must be between 1000 and 2000<br />
+                    &nbsp;Value should be a multiple of 100.
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter the Salary You Want:&nbsp;
+                </span>
+                <input id ="txtSalary4" maxlength="20" validatorName ="salary4"/>
+                &nbsp;<div validator="salary4"></div>
+                <br />
+                <input type="button" value="Submit!!" onclick ="ValidateSalary4(); return true;"/>
+                <div id="salary4Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
+    </div>
+    
+
+
+
+    
+
+    <script type="text/javascript">
+        var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
+        var vManager1 = new ValidationManager()
+                        .addValidator(["name"], [{ type: ValidationType.Required, message: "Please enter your name." }])
+                        .addValidator(["salary1"], [{
+                            type: ValidationType.Compare
+                            , rule: { compareType: CompareType.LessThanEqual, value: 100 }
+                            , message: "Salary should be less than or equal to $100."
+                        }])
+                        .addValidator(["salary2"], [{
+                            type: ValidationType.Range
+                            , rule: [ 1000, 2000 ]
+                            , message: "Salary should be between $1000 and $2000."
+                        }])
+                        .addValidator(["email"], [{
+                            type: ValidationType.RegularExpression
+                            , rule: emailRegExp
+                            , message: "The email id that you entered does not seem to be correct."
+                        }])
+                        .addValidator(["salary3"], [{
+                            type: ValidationType.Custom
+                            , rule: CustomSalaryValidation
+                            , message: "Salary should be in multiples of 100."
+                        }])
+                        .addValidator(["salary4"], [{ type: ValidationType.Required, message: "Salary cannot be blank." },
+                            { type: ValidationType.Range, rule: [1000, 2000], message: "Salary should be between $1000 and $2000." },
+                            { type: ValidationType.Custom, rule: CustomSalaryValidation, message: "Salary should be in multiples of 100." }])
+                        .initialize();
+        function ValidateName1() {
+            vManager1.validate(["name"]);
+            SetSummary("name1Sumamry", "name");
+        }
+        function ValidateSalary1() {
+            vManager1.validate(["salary1"]);
+            SetSummary("salary1Summary", "salary1");
+        }
+        function ValidateSalary2() {
+            vManager1.validate(["salary2"]);
+            SetSummary("salary2Summary", "salary2");
+        }
+        function ValidateEmail1() {
+            vManager1.validate(["email"]);
+            SetSummary("email1Summary", "email");
+        }
+        function ValidateSalary3() {
+            vManager1.validate(["salary3"]);
+            SetSummary("salary3Summary", "salary3");
+        }
+        function ValidateSalary4() {
+            vManager1.validate(["salary4"]);
+            SetSummary("salary4Summary", "salary4");
+        }
+        function CustomSalaryValidation(s) {
+            if (s.length === 0 || !isNumber(s)) { return false; }
+            if (s % 100 !== 0) {//salary should be in multiples of 100
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        function SetSummary(divSummary, validator) {
+            var i = 0;
+            var validationResults = null;
+            var validationSummary = "";
+            validationResults = vManager1.getValidationResults(validator);
+            validationSummary += "<ul>";
+            for (; i < validationResults.length; i++) {
+                validationSummary += "<li>";
+                validationSummary += validationResults[i].message;
+                validationSummary += "</li>";
+            }
+            validationSummary += "</ul>";
+            $("#" + divSummary).html(validationSummary);
+        }
+        //function to check if a given value is numeric or not
+        function isNumber(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+    </script>
+
+</body>
 </html>
