@@ -3,8 +3,8 @@
     var validationManager = function () {
         this._validators = new Object();
         this._validatorNames = [];
-        this._passImage = "./validateJSImages/Passed/check-icon32pixel.png";
-        this._failImage = "./validateJSImages/Failed/delete-icon32pixel.png";
+        this._passImage = "./validateJSImages/Passed/check-icon24pixel.png";
+        this._failImage = "./validateJSImages/Failed/delete-icon24pixel.png";
         this._showFailImgNotification = true;
         this._showPassImgNotification = true;
         this._showFailToolTips = true;
@@ -13,7 +13,7 @@
         this._tooltipJS = new toolTipJS();
         this._tooltipContentTemplate = "";
         this._tooltipMessageTemplate = "";
-        
+
         //adds a failed validation to the validation results list
         this.addFailedValidation = function (validatorName, inputControl, type, message) {
             this._validators[validatorName]._failedMessages
@@ -57,6 +57,21 @@
                         break;
                     case validationType.Custom:
                         validateFunc = validateCustom;
+                        break;
+                    case validationType.MinLength:
+                        validateFunc = validateMinLength;
+                        break;
+                    case validationType.MaxLength:
+                        validateFunc = validateMaxLength;
+                        break;
+                    case validationType.Alphabets:
+                        validateFunc = validateAlphabets;
+                        break;
+                    case validationType.AlphaNumeric:
+                        validateFunc = validateAlphaNumeric;
+                        break;
+                    case validationType.Numeric:
+                        validateFunc = validateNumeric;
                         break;
                 }
 
@@ -127,7 +142,7 @@
                 i = 0;
                 //lets build our tooltip content
                 for (; i < msgList.length; i++) {
-                    messageBody.push(msgTemplate.replace("{{message}}", msgList[i].message));                    
+                    messageBody.push(msgTemplate.replace("{{message}}", msgList[i].message));
                 }
                 messageBody = messageBody.join('');
                 tooltipContent = tooltipContent.replace("{{validation-messages}}", messageBody);
@@ -161,7 +176,7 @@
                             imgFail = document.createElement("img");
                             imgFail.setAttribute("id", "imgFail" + validatorName);
                             notificationControl.append(imgFail);
-                            imgFail = $("#imgFail" + validatorName);                                                  
+                            imgFail = $("#imgFail" + validatorName);
                         }
                         imgFail.css("display", "none");
                         imgFail.css("position", "absolute");
@@ -171,7 +186,7 @@
                 }
             }
             //Pass Image
-            i = 0; 
+            i = 0;
             if (this._showPassImgNotification === true) {
                 for (; i < validators.length; i++) {
                     validatorName = this._validators[validators[i]]._name;
@@ -208,10 +223,10 @@
             this._tooltipJS.className = "validateJSToolTip";
 
             this._tooltipContentTemplate += "<table style='text-align:left;font-family:Arial;'>";
-			this._tooltipContentTemplate += "<tr><th style='background-color:#C6E2FF;text-align:center;'>Messages</th></tr>";
-			this._tooltipContentTemplate += "{{validation-messages}}";
-			this._tooltipContentTemplate += "</table>";
-			this._tooltipMessageTemplate += "<tr><td><span style='font-weight:900;'>&#8226;</span> {{message}}</td></tr>";
+            this._tooltipContentTemplate += "<tr><th style='background-color:#C6E2FF;text-align:center;'>Messages</th></tr>";
+            this._tooltipContentTemplate += "{{validation-messages}}";
+            this._tooltipContentTemplate += "</table>";
+            this._tooltipMessageTemplate += "<tr><td><span style='font-weight:900;'>&#8226;</span> {{message}}</td></tr>";
 
             //we need to add the css class for our validation tooltips
             //to the end of the <head> tag
@@ -245,16 +260,11 @@
 
             return this;
         },
-        //applyToolTipCss: function (className) {
-        //    this._toolTipCssClass = className;
-        //    this._tooltipJS.className = className;
-        //    return this;
-        //},        
         showFailToolTips: function (bool) {
             this._showFailToolTips = bool;
             return this;
         },
-        showFailImgNotification: function(bool){
+        showFailImgNotification: function (bool) {
             this._showFailImgNotification = bool;
             return this;
         },
@@ -266,16 +276,21 @@
             this._passImage = img;
             return this;
         },
-        setFailImage: function(img){
+        setFailImage: function (img) {
             this._failImage = img;
             return this;
         },
-        getValidationResults: function () {
+        getValidationResults: function (validator) {
             var results = [];
             var validators = this._validatorNames;
             var i = 0;
-            for (; i < validators.length; i++) {
-                $.merge(results, this._validators[validators[i]]._failedMessages);
+            if (validator === null || validator === undefined) {
+                for (; i < validators.length; i++) {
+                    $.merge(results, this._validators[validators[i]]._failedMessages);
+                }
+            }
+            else {
+                results = this._validators[validator]._failedMessages;
             }
             return results;
         },
@@ -303,22 +318,22 @@
                     if (this._showFailImgNotification == true) {
                         this.notifyFail(validatorName);
                     }
-                    
+
                     if (this._showFailToolTips === true) {
                         this.applyTooltip(validatorName);
-                    }                    
+                    }
                 }
                 else {
                     if (this._showPassImgNotification == true) {
                         this.notifyPass(validatorName);
-                    }                   
+                    }
                 }
                 if (isValid === true && this._validators[validatorName]._failedMessages.length > 0) { //we have a failed validation
                     isValid = false;
                 }
             }
             if (this._validateOnTextChange && this._validateOnTextChange.value === true) {
-                this._validateOnTextChange.onComplete();
+                this._validateOnTextChange.onComplete(validatorList);
             };
             return isValid;
         },
@@ -341,7 +356,7 @@
             //not implemented
         },
         validateOnTextChange: function (f, onComplete) {
-            this._validateOnTextChange = {value: f, onComplete: onComplete};
+            this._validateOnTextChange = { value: f, onComplete: onComplete };
             return this;
         }
     };
@@ -361,6 +376,7 @@
     function validateCompare(controlValue, rule) {
         var type = rule.compareType;
         var value = rule.value;
+        if (controlValue.length === 0 || !isNumber(controlValue)) { return false; }
         if (controlValue.length > 0) {
             switch (type) {
                 case compareType.Equal:
@@ -389,6 +405,7 @@
     function validateRange(controlValue, rule) {
         var minValue = rule[0];
         var maxValue = rule[1];
+        if (controlValue.length === 0 || !isNumber(controlValue)) { return false; }
         if (!(controlValue >= minValue && controlValue <= maxValue)) { return false }
         return true;
     }
@@ -401,6 +418,33 @@
     function validateCustom(controlValue, rule) {
         var functionToCall = rule;
         return functionToCall(controlValue);
+    }
+    //function to check min length
+    function validateMinLength(controlValue, rule) {
+        var minLength = rule[0];
+        if (controlValue.length < minLength) { return false; }
+        else { return true; }
+    }
+    //function to check max length
+    function validateMaxLength(controlValue, rule) {
+        var maxLength = rule[0];
+        if (controlValue.length > maxLength) { return false; }
+        else { return true; }
+    }
+    //function to validate alphabets
+    function validateAlphabets(controlValue) {
+        var regExp = new RegExp("^[a-zA-Z ]*$");
+        return regExp.test(controlValue);
+    }
+    //function to validate alpha numeric values
+    function validateAlphaNumeric(controlValue) {
+        var regExp = new RegExp("^[a-zA-Z0-9_]*$");
+        return regExp.test(controlValue);
+    }
+    //function to validate numeric values
+    function validateNumeric(controlValue) {
+        var regExp = new RegExp("^[0-9]+$");
+        return regExp.test(controlValue);
     }
     //validator object
     var validator = function (name, params) {
@@ -415,14 +459,25 @@
         this.sourceControl = sourceControl;
         this.type = type;
         this.message = message;
-    };	
+    };
+
+    //function to check if a given value is numeric or not
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
     //Validation Types
     var validationType = {
         Required: 1,
         Compare: 2,
         Range: 3,
         RegularExpression: 4,
-        Custom: 5
+        Custom: 5,
+        MinLength: 6,
+        MaxLength: 7,
+        Alphabets: 8,
+        AlphaNumeric: 9,
+        Numeric: 10
     };
     //Compare Types
     var compareType = {
@@ -525,12 +580,12 @@
         var left = sourceControl.offset().left;
         var right = sourceControl.offset().left + srcWidth;
         var bottom = sourceControl.offset().top + srcHeight;
-        
-        
+
+
         var distance = e.data.distance;
 
         //remove any previous class
-        divToolTip.removeClass(); 
+        divToolTip.removeClass();
         divToolTipTriangle.removeClass();
 
         //reset top and left
@@ -548,7 +603,7 @@
             top = bottom = e.pageY;
         }
         else {
-            targetTop = (top + (srcHeight / 2)) - (tooltipHeight / 2);            
+            targetTop = (top + (srcHeight / 2)) - (tooltipHeight / 2);
             targetTop -= 4; //adjusting top
             if (($(window).width() - right) > 250) { //right position for tooltip
                 targetLeft = right + distance;
@@ -562,7 +617,7 @@
             }
             divToolTipTriangle.css("top", (targetTop + (tooltipHeight / 2)) - 8);
         }
-        
+
         //apply the top and left for the tooltip div
         divToolTip.css("top", targetTop);
         divToolTip.css("left", targetLeft);
