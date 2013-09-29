@@ -130,7 +130,7 @@ var vManager = new ValidationManager()
                     <br /><br />
                     <span class="LightLargerSpan">
                         Some specific attributes are need to be added to the input fields, apart from that 
-                        we need to &lt;div&gt; tags to show the validation notifications.<br />
+                        we need to add &lt;div&gt; tag to show the validation notifications.<br />
                         Here is how this is done:
                     </span>
                     <br /><br />
@@ -154,10 +154,6 @@ var vManager = new ValidationManager()
         <span class="extraLargeSpan">
             Lets have some fun shall we...
         </span>
-
-
-
-
         <br />
         <table class="regularTable">
         <tr>
@@ -196,8 +192,6 @@ vManager.addValidator(["name"], [{ type: ValidationType.Required, message: "Plea
             </td>
         </tr>
         </table>
-
-
     <br />
         <table class="regularTable">
         <tr>
@@ -241,10 +235,6 @@ vManager.addValidator(["salary"]
             </td>
         </tr>
         </table>
-
-
-
-
         <br />
         <table class="regularTable">
         <tr>
@@ -288,9 +278,6 @@ vManager.addValidator(["salary"]
             </td>
         </tr>
         </table>
-
-
-
         <br />
         <table class="regularTable">
         <tr>
@@ -335,9 +322,6 @@ vManager.addValidator(["email"]
             </td>
         </tr>
         </table>
-
-
-
         <br />
         <table class="regularTable">
         <tr>
@@ -381,9 +365,6 @@ vManager.addValidator(["salary"]
             </td>
         </tr>
         </table>
-
-
-
         <br />
         <table class="regularTable">
         <tr>
@@ -436,6 +417,58 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         </table>
 
 
+
+        <br />
+        <table class="regularTable">
+        <tr>
+            <td>
+                <span class="largerSpan">
+                   Validation Firing On Change Event
+                </span>
+                <br /><br />
+                <span class="LightLargerSpan">
+                    Syntax:
+                </span>
+                <pre>
+vManager.addValidator([validatorName]
+                    , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
+                    , message: <i>messageText</i> }, ...])
+    .validateOnTextChange(true, SetSummary)
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Usage:
+                </span>
+                <pre>
+vManager.addValidator(["salary"], [{ type: ValidationType.Required
+                    , message: "Salary cannot be blank." },
+                    { type: ValidationType.Range
+                    , rule: [1000, 2000], message: "Salary should be between $1000 and $2000." },
+                    { type: ValidationType.Custom
+                    , rule: CustomSalaryValidation, message: "Salary should be in multiples of 100." },
+                    { type: ValidationType.MaxLength, rule: [4], message: "Maximum length for this field is 4." },
+                    { type: ValidationType.MinLength, rule: [2], message: "Minimum length for this field is 2." },
+                    { type: ValidationType.Numeric, message: "Only numbers are allowed in this field"}])
+    .validateOnTextChange(true, SetSummary)
+    .initialize();
+                </pre>
+                <span class="LightLargerSpan">
+                    Demo:<br />
+                    &nbsp;&nbsp;Change the value and click outside the field to fire the validation. 
+                </span>
+                <br /><br />
+                <span class="demoLabel">
+                    Enter the Salary You Want:&nbsp;
+                </span>
+                <input id ="txtSalary5" maxlength="20" validatorName ="salary5"/>
+                &nbsp;<div validator="salary5"></div>
+                <br />
+                <div id="salary5Summary"></div>
+            </td>
+        </tr>
+        </table>
+
+
     </div>
     
 
@@ -470,6 +503,16 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                         .addValidator(["salary4"], [{ type: ValidationType.Required, message: "Salary cannot be blank." },
                             { type: ValidationType.Range, rule: [1000, 2000], message: "Salary should be between $1000 and $2000." },
                             { type: ValidationType.Custom, rule: CustomSalaryValidation, message: "Salary should be in multiples of 100." }])
+                        .initialize();
+
+        var vManager2 = new ValidationManager()
+                        .addValidator(["salary5"], [{ type: ValidationType.Required, message: "Salary cannot be blank." },
+                            { type: ValidationType.Range, rule: [1000, 2000], message: "Salary should be between $1000 and $2000." },
+                            { type: ValidationType.Custom, rule: CustomSalaryValidation, message: "Salary should be in multiples of 100." },
+                            { type: ValidationType.MaxLength, rule: [4], message: "Maximum length for this field is 4." },
+                            { type: ValidationType.MinLength, rule: [2], message: "Minimum length for this field is 2." },
+                            { type: ValidationType.Numeric, message: "Only numbers are allowed in this field" }])
+                        .validateOnTextChange(true, SetSummary2)
                         .initialize();
         function ValidateName1() {
             vManager1.validate(["name"]);
@@ -517,6 +560,20 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             }
             validationSummary += "</ul>";
             $("#" + divSummary).html(validationSummary);
+        }
+        function SetSummary2(validator) {
+            var i = 0;
+            var validationResults = null;
+            var validationSummary = "";
+            validationResults = vManager2.getValidationResults(validator[0]);
+            validationSummary += "<ul>";
+            for (; i < validationResults.length; i++) {
+                validationSummary += "<li>";
+                validationSummary += validationResults[i].message;
+                validationSummary += "</li>";
+            }
+            validationSummary += "</ul>";
+            $("#salary5Summary").html(validationSummary);
         }
         //function to check if a given value is numeric or not
         function isNumber(n) {
