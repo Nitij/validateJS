@@ -7,6 +7,7 @@
         this._failImage = "./validateJSImages/Failed/delete-icon24pixel.png";
         this._showFailImgNotification = true;
         this._showPassImgNotification = true;
+        this._highlightBorder = false;
         this._showFailToolTips = true;
         this._toolTipCssClass = null;
         this._validateOnTextChange = null;
@@ -88,11 +89,16 @@
             var imgFail = null;
             var imgPass = null;
             var notificationControl = null;
+            var sourceControl = null;
+            sourceControl = $("*[validatorName='" + validatorName + "']");
             notificationControl = $("div[validator='" + validatorName + "']");
             if (notificationControl.length > 0) {
                 $("#imgFail" + validatorName).css("display", "none");
                 $("#imgPass" + validatorName).css("display", "none");
                 this._validators[validatorName]._isNotified = false;
+            }
+            if (this._highlightBorder === true && sourceControl.length > 0) {
+                sourceControl.removeClass();
             }
         };
         //Function to show notifications for validation fails
@@ -150,6 +156,15 @@
                 this._tooltipJS.applyTooltip(control, tooltipContent, 14, false);
             }
         };
+        //Function to notify border highlighting
+        this.notifyBorderHighlight = function (validatorName) {
+            var sourceControl = null;
+            sourceControl = $("*[validatorName='" + validatorName + "']");
+            //we will check for each notification type and will apply them
+            if (sourceControl.length > 0) {
+                $(sourceControl).addClass("validateJSHighlightBorder");
+            }
+        };
         return this;
     };
     validationManager.prototype = {
@@ -160,6 +175,7 @@
             var validators = this._validatorNames;
             var toolTipCssClass = [], tooltipTriangle = "";
             var toolTipLeftTriangle = "", toolTipRightTriangle = "";
+            var borderHighlightCss = ".validateJSHighlightBorder {border:1px solid red;}";
             var i = 0;
             var changeEventDelegate = null; //reusable delegate
 
@@ -231,7 +247,7 @@
             //we need to add the css class for our validation tooltips
             //to the end of the <head> tag
             //Tooltip css class
-            toolTipCssClass.push(".validateJSToolTip { background-color:#ffffff;");
+            toolTipCssClass.push(".validateJSToolTip{ background-color:#ffffff;");
             toolTipCssClass.push("font-size:medium;font-weight:400;padding:7px;");
             toolTipCssClass.push("border: 2px solid #000000;-moz-border-radius: 16px;");
             toolTipCssClass.push("-webkit-border-radius: 16px;border-radius: 16px;}");
@@ -239,8 +255,8 @@
 
             //tooltip triangle
             tooltipTriangle += ".{{class-name}}{position: absolute;";
-            tooltipTriangle += "border-style: solid;border-width: 8px 8px 8px 8px;";
-            tooltipTriangle += "border-color: {{border-color}};";
+            tooltipTriangle += "border-style:solid;border-width: 8px 8px 8px 8px;";
+            tooltipTriangle += "border-color:{{border-color}};";
             tooltipTriangle += "height:0px;width: 0px;}";
 
             //Tooltip left triangle css class
@@ -256,7 +272,7 @@
                 "validateJSTooltipRight");
 
             $("<style type='text/css'>" + toolTipCssClass + " " + toolTipLeftTriangle
-                + " " + toolTipRightTriangle + "</style>").appendTo("head");
+                + " " + toolTipRightTriangle + borderHighlightCss + "</style>").appendTo("head");
 
             return this;
         },
@@ -270,6 +286,10 @@
         },
         showPassImgNotification: function (bool) {
             this._showPassImgNotification = bool;
+            return this;
+        },
+        highlightBorder: function (bool) {
+            this._highlightBorder = bool;
             return this;
         },
         setPassImage: function (img) {
@@ -322,6 +342,10 @@
                     if (this._showFailToolTips === true) {
                         this.applyTooltip(validatorName);
                     }
+
+                    if (this._highlightBorder === true) {
+                        this.notifyBorderHighlight(validatorName);
+                    }
                 }
                 else {
                     if (this._showPassImgNotification == true) {
@@ -358,7 +382,7 @@
         validateOnTextChange: function (f, onComplete) {
             this._validateOnTextChange = { value: f, onComplete: onComplete };
             return this;
-        }
+        },
     };
 
     //validation functions
