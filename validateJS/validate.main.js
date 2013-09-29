@@ -7,6 +7,7 @@
         this._failImage = "./validateJSImages/Failed/delete-icon24pixel.png";
         this._showFailImgNotification = true;
         this._showPassImgNotification = true;
+        this._highlightBorder = false;
         this._showFailToolTips = true;
         this._toolTipCssClass = null;
         this._validateOnTextChange = null;
