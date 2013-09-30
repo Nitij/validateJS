@@ -27,19 +27,19 @@
             font-size: medium;
         }
 
-        .parameterTable th {
-            background-color: lightgray;
-            font-family: Georgia;
-            font-size: medium;
-            font-weight: 600;
-        }
+            .parameterTable th {
+                background-color: lightgray;
+                font-family: Georgia;
+                font-size: medium;
+                font-weight: 600;
+            }
 
-        .parameterTable td {
-            font-family: Georgia;
-            font-size: medium;
-            border-bottom: 2px solid black;
-            padding: 10px;
-        }
+            .parameterTable td {
+                font-family: Georgia;
+                font-size: medium;
+                border-bottom: 2px solid black;
+                padding: 10px;
+            }
 
         pre {
             font-size: 100%;
@@ -114,6 +114,46 @@
         </span>
         <br />
         <br />
+
+        <span class="extraLargeSpan">Lets first have a demo...
+        </span>
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:50%;">
+                                <label for ="txtDemoFirstName">First Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="txtDemoFirstName" maxlength="20" validatorname="demoFirstName" />
+                                &nbsp;<div validator="demoFirstName"></div>
+                                <br /><br />
+                                <label for ="txtDemoFirstName">Last Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="Text1" maxlength="20" validatorname="demoLastName" />
+                                &nbsp;<div validator="demoLastName"></div>
+                                <br /><br />
+                                <label for ="txtDemoEmail">Email Address:</label>&nbsp;
+                                <input id="txtDemoEmail" maxlength="20" validatorname="demoEmail" />
+                                &nbsp;<div validator="demoEmail"></div>
+                                <br /><br />
+                                <label for ="txtDemoPhone">Phone Number:</label>
+                                <input id="txtDemoPhone" maxlength="20" validatorname="demoPhone" />
+                                &nbsp;<div validator="demoPhone"></div>
+                                <br /><br />
+                                <input type="button" value="Submit!!" onclick="ValidateDemoForm(); return true;" />
+                                (hover over the notification icons to see the validation messages)
+                            </td>
+                            <td style="width:50%;">
+                                <div style="font-family:Georgia;" id="divDemoFormSummary"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <span class="extraLargeSpan">On to the validations...
+        </span>
+        <br />
         <table class="regularTable">
             <tr>
                 <td>
@@ -140,9 +180,6 @@ var vManager = new ValidationManager()
                 </td>
             </tr>
         </table>
-        <br />
-        <span class="extraLargeSpan">On to the validations...
-        </span>
         <br />
         <table class="regularTable">
             <tr>
@@ -851,6 +888,39 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                             { type: ValidationType.Numeric, message: "Only numbers are allowed in this field" }])
                         .validateOnTextChange(true, SetSummary2)
                         .initialize();
+
+        var vManager3 = new ValidationManager()
+                        .addValidator(["demoFirstName"], [{ type: ValidationType.Required, message: "Please enter your first name." },
+                        { type: ValidationType.Alphabets, message: "Only alphabets are allowed in the first name." }])
+                        .addValidator(["demoLastName"], [{ type: ValidationType.Required, message: "Please enter your last name." },
+                        { type: ValidationType.Alphabets, message: "Only alphabets are allowed in the last name." }])
+                        .addValidator(["demoEmail"], [{
+                            type: ValidationType.RegularExpression
+                            , rule: emailRegExp
+                            , message: "The email id that you entered does not seem to be correct."
+                        },
+                        {
+                            type: ValidationType.MaxLength
+                            , rule: [10]
+                            , message: "The maximum length for email is 20 characters."
+                        }])
+                        .addValidator(["demoPhone"], [{
+                            type: ValidationType.Numeric
+                            , message: "Only numbers are allowed in phone number."
+                        },
+                        {
+                            type: ValidationType.MaxLength
+                            , rule: [15]
+                            , message: "Phone number maximum length can only be upto 15."
+                        },
+                        {
+                            type: ValidationType.MinLength
+                            , rule: [6]
+                            , message: "Phone number minimum length can only be upto 6."
+                        }])
+                        .validateOnTextChange(true, SetDemoSummary)
+                        .initialize();
+
         function ValidateName1() {
             vManager1.validate(["name"]);
             SetSummary("name1Sumamry", "name");
@@ -875,6 +945,10 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             vManager1.validate(["salary4"]);
             SetSummary("salary4Summary", "salary4");
         }
+        function ValidateDemoForm() {
+            vManager3.validate(["demoFirstName", "demoLastName", "demoEmail", "demoPhone"]);
+            SetDemoSummary();
+        }
         function CustomSalaryValidation(s) {
             if (s.length === 0 || !isNumber(s)) { return false; }
             if (s % 100 !== 0) {//salary should be in multiples of 100
@@ -883,6 +957,20 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             else {
                 return true;
             }
+        }
+        function SetDemoSummary() {
+            var i = 0;
+            var validationResults = null;
+            var validationSummary = "";
+            validationResults = vManager3.getValidationResults();
+            validationSummary += "<ul>";
+            for (; i < validationResults.length; i++) {
+                validationSummary += "<li style='padding:4px;'>";
+                validationSummary += validationResults[i].message;
+                validationSummary += "</li>";
+            }
+            validationSummary += "</ul>";
+            $("#divDemoFormSummary").html(validationSummary);
         }
         function SetSummary(divSummary, validator) {
             var i = 0;
