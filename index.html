@@ -6,59 +6,86 @@
     <script type="text/javascript" src="validateJS/validate.main.js"></script>
     <style type="text/css">
         .divMain {
-            text-align:center;
+            text-align: center;
         }
+
         .regularTable {
-            width:80%;
-            text-align:left;
-            border:1px solid black;
+            width: 80%;
+            text-align: left;
+            border: 1px solid black;
             margin-left: auto;
-            margin-right: auto; 
+            margin-right: auto;
             -moz-border-radius: 16px;
             -webkit-border-radius: 16px;
-            border-radius: 16px;   
-            padding:10px;    
+            border-radius: 16px;
+            padding: 10px;
         }
+
+        .parameterTable {
+            width: 100%;
+            font-family: Georgia;
+            font-size: medium;
+        }
+
+        .parameterTable th {
+            background-color: lightgray;
+            font-family: Georgia;
+            font-size: medium;
+            font-weight: 600;
+        }
+
+        .parameterTable td {
+            font-family: Georgia;
+            font-size: medium;
+            border-bottom: 2px solid black;
+            padding: 10px;
+        }
+
         pre {
             font-size: 100%;
-            white-space: pre; 
-            white-space: pre-wrap; 
-            white-space: -moz-pre-wrap; 
-            white-space: -o-pre-wrap; 
+            white-space: pre;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -o-pre-wrap;
             width: auto;
             display: block;
             clear: both;
             color: #555555;
             background: #f4f4f4;
-            border: solid 1px #e1e1e1
-        } 
-        code { 
+            border: solid 1px #e1e1e1;
+        }
+
+        code {
             font-size: 100%;
             font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-            display: inline; 
+            display: inline;
             color: #555555;
             padding: 1em 1em;
             background: #f4f4f4;
         }
+
         .extraLargeSpan {
-            font-size:x-large;
-            font-family:Georgia;
+            font-size: xx-large;
+            font-family: Georgia;
         }
+
         .largerSpan {
-            font-size:larger;
-            font-family:Georgia;
-            text-align:left;
+            font-size: x-large;
+            font-family: Georgia;
+            text-align: left;
         }
+
         .LightLargerSpan {
-            font-weight:500;
-            font-size:medium;
-            font-family:Georgia;
-            text-align:left;
+            font-weight: 500;
+            font-size: medium;
+            font-family: Georgia;
+            text-align: left;
         }
+
         .demoLabel {
-            font-family:Arial;
-            font-size:large;
-        }        
+            font-family: Arial;
+            font-size: large;
+        }
     </style>
 </head>
 <body>
@@ -67,37 +94,35 @@
     </div>
     <hr />
     <div id="divMain" class="divMain">
-        <span class="extraLargeSpan">
-            validateJS is a lightweight javascript library that helps to easily setup a variety of client side 
+        <span class="extraLargeSpan">validateJS is a lightweight javascript library that helps to easily setup a variety of client side 
             validations
         </span>
-        <br /><br />
-        <br /><br />
-        <span class="largerSpan">
-            This library cuts short your coding time to set up all those pesky validations via javascript
+        <br />
+        <br />
+        <br />
+        <br />
+        <span class="largerSpan">This library cuts short your coding time to set up all those pesky validations via javascript
              which cannot be ignored and are essential for any input form. Lets go through all those 
             validations one by one.
         </span>
         <br />
-        <span class="largerSpan">
-            With the default settings of this library you really just need to initialize the library to
+        <span class="largerSpan">With the default settings of this library you really just need to initialize the library to
             add the various validators to your form elements.
         </span>
         <br />
-        <span class="largerSpan">
-            Let us move forward and see what this library can do without wasting any more time.
+        <span class="largerSpan">Let us move forward and see what this library can do without wasting any more time.
         </span>
-        <br /><br />
+        <br />
+        <br />
         <table class="regularTable">
             <tr>
                 <td>
-                    <span class="largerSpan">
-                        Initializing the Library:
+                    <span class="largerSpan">Initializing the Library:
                     </span>
-                    
-                    <br /><br />
-                    <span class="LightLargerSpan">
-                        To initialize the validateJS library, add the references to jQuery and validateJS scripts,
+
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">To initialize the validateJS library, add the references to jQuery and validateJS scripts,
                          and then create a ValidationManager object in your page load event. Most of the methods 
                         can be chained to save typing more code.
                     </span>
@@ -110,39 +135,35 @@ var vManager = new ValidationManager()
     .addValidator(["amount"], [{ type: ValidationType.Required, message: "Amount is required." }])
     .initialize();
                     </pre>
-                    <span class="LightLargerSpan">
-                        Always remember to initialize your validation manager object.
+                    <span class="LightLargerSpan">Always remember to initialize your validation manager object.
                     </span>
                 </td>
             </tr>
         </table>
         <br />
-        <span class="extraLargeSpan">
-            On to the validations...
+        <span class="extraLargeSpan">On to the validations...
         </span>
         <br />
         <table class="regularTable">
             <tr>
                 <td>
-                    <span class="largerSpan">
-                        Setting up the markup:
+                    <span class="largerSpan">Setting up the markup:
                     </span>
-                    <br /><br />
-                    <span class="LightLargerSpan">
-                        Some specific attributes are need to be added to the input fields, apart from that 
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Some specific attributes are need to be added to the input fields, apart from that 
                         we need to add &lt;div&gt; tag to show the validation notifications.<br />
                         Here is how this is done:
                     </span>
-                    <br /><br />
-                    <span class="LightLargerSpan">
-                        Input element
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Input element
                     </span>
                     <pre>
 &lt;input id ="txtAmount" maxlength="20" validatorName ="amount"/&gt;
                     </pre>
                     <br />
-                    <span class="LightLargerSpan">
-                        Display validator(this has to be near to the target input element)
+                    <span class="LightLargerSpan">Display validator(this has to be near to the target input element)
                     </span>
                     <pre>
 &lt;div validator = "amount"&gt;&lt;/&lt;div&gt;
@@ -151,154 +172,142 @@ var vManager = new ValidationManager()
             </tr>
         </table>
         <br />
-        <span class="extraLargeSpan">
-            Lets have some fun shall we...
+        <span class="extraLargeSpan">Lets have some fun shall we...
         </span>
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                    Required Field Validation
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Required Field Validation
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName], [{ type: ValidationType.Required, message: messageText }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["name"], [{ type: ValidationType.Required, message: "Please enter your name." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rule : A value is required.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Please Enter Your Name:&nbsp;
-                </span>
-                <input id ="txtName" maxlength="20" validatorName ="name"/>
-                &nbsp;<div validator="name"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateName1(); return true;"/>
-                <div id="name1Sumamry"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rule : A value is required.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Please Enter Your Name:&nbsp;
+                    </span>
+                    <input id="txtName" maxlength="20" validatorname="name" />
+                    &nbsp;<div validator="name"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateName1(); return true;" />
+                    <div id="name1Sumamry"></div>
+                </td>
+            </tr>
         </table>
-    <br />
+        <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                    Compare Validation
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Compare Validation
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.Compare
                     , rule: { compareType: <i>compareType</i>, value: <i>value</i> }, message: <i>messageText</i> }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["salary"]
                     , [{ type: ValidationType.Compare
                     , rule: { compareType: CompareType.LessThanEqual, value: 100 }
                     , message: "Salary should be less than or equal to $100." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rule : Value must be less than or equal to 100.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter the Salary You Want:&nbsp;
-                </span>
-                <input id ="txtSalary1" maxlength="20" validatorName ="salary1"/>
-                &nbsp;<div validator="salary1"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateSalary1(); return true;"/>
-                <div id="salary1Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rule : Value must be less than or equal to 100.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter the Salary You Want:&nbsp;
+                    </span>
+                    <input id="txtSalary1" maxlength="20" validatorname="salary1" />
+                    &nbsp;<div validator="salary1"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateSalary1(); return true;" />
+                    <div id="salary1Summary"></div>
+                </td>
+            </tr>
         </table>
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                    Range Validation
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Range Validation
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.Range, rule: [<i>minValue</i>, <i>maxValue</i>]
                     , message: <i>messageText</i> }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["salary"]
                     , [type: ValidationType.Range
                     , rule: [1000, 2000]
                     , message: "Salary should be between $1000 and $2000." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rule : Value must be between 1000 and 2000.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter the Salary You Want:&nbsp;
-                </span>
-                <input id ="txtSalary2" maxlength="20" validatorName ="salary2"/>
-                &nbsp;<div validator="salary2"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateSalary2(); return true;"/>
-                <div id="salary2Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rule : Value must be between 1000 and 2000.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter the Salary You Want:&nbsp;
+                    </span>
+                    <input id="txtSalary2" maxlength="20" validatorname="salary2" />
+                    &nbsp;<div validator="salary2"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateSalary2(); return true;" />
+                    <div id="salary2Summary"></div>
+                </td>
+            </tr>
         </table>
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                    Regular Expression Validation
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Regular Expression Validation
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.RegularExpression, rule: <i>regularExpression</i>
                     , message: <i>messageText</i> }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
 vManager.addValidator(["email"]
                     , [type: ValidationType.RegularExpression
@@ -306,86 +315,80 @@ vManager.addValidator(["email"]
                     , message: "The email id that you entered does not seem to be correct." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rule : Text entered should be an email id in correct format.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter Your Email Id:&nbsp;
-                </span>
-                <input id ="txtEmail" maxlength="20" validatorName ="email"/>
-                &nbsp;<div validator="email"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateEmail1(); return true;"/>
-                <div id="email1Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rule : Text entered should be an email id in correct format.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter Your Email Id:&nbsp;
+                    </span>
+                    <input id="txtEmail" maxlength="20" validatorname="email" />
+                    &nbsp;<div validator="email"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateEmail1(); return true;" />
+                    <div id="email1Summary"></div>
+                </td>
+            </tr>
         </table>
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                    Custom Validation
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Custom Validation
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
                     , message: <i>messageText</i> }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["salary"]
                     , [type: ValidationType.Custom
                     , rule: CustomSalaryValidation
                     , message: "Salary should be in multiples of 100." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rule : Value should be a multiple of 100.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter the Salary You Want:&nbsp;
-                </span>
-                <input id ="txtSalary3" maxlength="20" validatorName ="salary3"/>
-                &nbsp;<div validator="salary3"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateSalary3(); return true;"/>
-                <div id="salary3Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rule : Value should be a multiple of 100.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter the Salary You Want:&nbsp;
+                    </span>
+                    <input id="txtSalary3" maxlength="20" validatorname="salary3" />
+                    &nbsp;<div validator="salary3"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateSalary3(); return true;" />
+                    <div id="salary3Summary"></div>
+                </td>
+            </tr>
         </table>
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                   Multiple Validations
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Multiple Validations
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
                     , message: <i>messageText</i> }, ...])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["salary"], [{ type: ValidationType.Required
                     , message: "Salary cannot be blank." },
                     { type: ValidationType.Range
@@ -396,50 +399,47 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                     , message: "Salary should be in multiples of 100." }])
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    Rules:<br />
-                    &nbsp;Value is required.<br />
-                    &nbsp;Value must be between 1000 and 2000<br />
-                    &nbsp;Value should be a multiple of 100.
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter the Salary You Want:&nbsp;
-                </span>
-                <input id ="txtSalary4" maxlength="20" validatorName ="salary4"/>
-                &nbsp;<div validator="salary4"></div>
-                <br />
-                <input type="button" value="Submit!!" onclick ="ValidateSalary4(); return true;"/>
-                <div id="salary4Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        Rules:<br />
+                        &nbsp;Value is required.<br />
+                        &nbsp;Value must be between 1000 and 2000<br />
+                        &nbsp;Value should be a multiple of 100.
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter the Salary You Want:&nbsp;
+                    </span>
+                    <input id="txtSalary4" maxlength="20" validatorname="salary4" />
+                    &nbsp;<div validator="salary4"></div>
+                    <br />
+                    <input type="button" value="Submit!!" onclick="ValidateSalary4(); return true;" />
+                    <div id="salary4Summary"></div>
+                </td>
+            </tr>
         </table>
 
 
 
         <br />
         <table class="regularTable">
-        <tr>
-            <td>
-                <span class="largerSpan">
-                   Validation Firing On Change Event
-                </span>
-                <br /><br />
-                <span class="LightLargerSpan">
-                    Syntax:
-                </span>
-                <pre>
+            <tr>
+                <td>
+                    <span class="largerSpan">Validation Firing On Change Event
+                    </span>
+                    <br />
+                    <br />
+                    <span class="LightLargerSpan">Syntax:
+                    </span>
+                    <pre>
 vManager.addValidator([validatorName]
                     , [{ type: ValidationType.Custom, rule: <i>customValidationFunctionName</i>
                     , message: <i>messageText</i> }, ...])
     .validateOnTextChange(true, SetSummary)
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Usage:
-                </span>
-                <pre>
+                    <span class="LightLargerSpan">Usage:
+                    </span>
+                    <pre>
 vManager.addValidator(["salary"], [{ type: ValidationType.Required
                     , message: "Salary cannot be blank." },
                     { type: ValidationType.Range
@@ -452,36 +452,366 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
     .validateOnTextChange(true, SetSummary)
     .initialize();
                 </pre>
-                <span class="LightLargerSpan">
-                    Demo:<br />
-                    &nbsp;&nbsp;Change the value and click outside the field to fire the validation. 
-                </span>
-                <br /><br />
-                <span class="demoLabel">
-                    Enter the Salary You Want:&nbsp;
-                </span>
-                <input id ="txtSalary5" maxlength="20" validatorName ="salary5"/>
-                &nbsp;<div validator="salary5"></div>
-                <br />
-                <div id="salary5Summary"></div>
-            </td>
-        </tr>
+                    <span class="LightLargerSpan">Demo:<br />
+                        &nbsp;&nbsp;Change the value and click outside the field to fire the validation. 
+                    </span>
+                    <br />
+                    <br />
+                    <span class="demoLabel">Enter the Salary You Want:&nbsp;
+                    </span>
+                    <input id="txtSalary5" maxlength="20" validatorname="salary5" />
+                    &nbsp;<div validator="salary5"></div>
+                    <br />
+                    <div id="salary5Summary"></div>
+                </td>
+            </tr>
         </table>
         <br />
-        <span class="extraLargeSpan">
-            And now here comes the documentation...
+        <span class="extraLargeSpan">And now here comes the documentation...
         </span>
 
         <br />
         <table class="regularTable">
-            
+            <tr>
+                <td>
+                    <span class="largerSpan">.addValidator(validators, params)
+                    </span>
+                    <br />
+
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>validators[]
+                            </td>
+                            <td>Type: Array<br />
+                                An array of validator names. All the names that yoe add here will be added
+                                 to the validator list with the same set of params that you pass along with
+                                 them. This is useful when we want to have different validators with the 
+                                same parameters.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>params[{ValidationType, Rules, Message}, ...]
+                            </td>
+                            <td>Type: Array of Object<br />
+                                Multiple validation types can be added to a single or multiple validators
+                                 using this paramenter. A list of object arguments is passed here.
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br />
+                    <span class="largerSpan">Validation Types
+                    </span>
+                    <br />
+
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Validation Type
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Required
+                            </td>
+                            <td>Rule Format: N/A<br />
+                                This is the required field validator. It makes sure that the user must
+                                 input some value or makes some selection.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Compare
+                            </td>
+                            <td>Rule Format: { compareType: <i>CompareType</i>, value: <i>numerical value</i> }<br />
+                                This validation type compare the input value with the type of comparision rule provided.<br />
+                                Following compare type are available for Compare Validation:
+                                <ul>
+                                    <li>CompareType.Equal</li>
+                                    <li>CompareType.NotEqual</li>
+                                    <li>CompareType.GreaterThan</li>
+                                    <li>CompareType.GreaterThanEqual</li>
+                                    <li>CompareType.LessThan</li>
+                                    <li>CompareType.LessThanEqual</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Range
+                            </td>
+                            <td>Rule Format: [ <i>minimum value</i>, <i>maximum value</i> ]<br />
+                                This validation type checks if the input value lies between the specified range or not.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.RegularExpression
+                            </td>
+                            <td>Rule Format: <i>regular expression string</i><br />
+                                This validation type validates the input with the regular expression string provided.<br />
+                                For example: this is a regular expression to validate an email address:<br />
+                                "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Custom
+                            </td>
+                            <td>Rule Format: <i>name of function to call</i><br />
+                                This validation calls the provided function and passes the input control's
+                                 value to that function as a parameter.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.MinLength
+                            </td>
+                            <td>Rule Format: [<i>minimum length</i>]<br />
+                                This validation type validates that the input value's length is less than or
+                                 equal to the minimum value.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.MaxLength
+                            </td>
+                            <td>Rule Format: [<i>maximum length</i>]<br />
+                                This validation type validates that the input value's length is greater than or
+                                 equal to the maximum value.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Alphabets
+                            </td>
+                            <td>Rule Format: N/A<br />
+                                This validation type makes sure that the input consists of only alphabets and whitespace.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.AlphaNumeric
+                            </td>
+                            <td>Rule Format: N/A<br />
+                                This validation type makes sure that the input consists of only alphabets and numbers.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ValidationType.Numeric
+                            </td>
+                            <td>Rule Format: N/A<br />
+                                This validation type makes sure that the input consists of only numbers.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.getValidationResults(validator)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>validator
+                            </td>
+                            <td>Type: string<br />
+                                Gives the validation results of a particular <i>validator</i>. If no parameter
+                                             is passed then validation results of all the validators combined will be 
+                                            returned.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.setPassImage(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                This function can be used to change the default image that is shown when all the 
+                                            validations for a particular validator are passed.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.setFailImage(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                This function can be used to change the default image that is shown when any
+                                             single validation for a particular validator is failed.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.showFailToolTips(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                This function can be used to turn failed validation message tooltip <i>on</i> or <i>off</i>.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.showFailImgNotification(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                When set to true the notification image for the failed validations will display,
+                                             when set to false then the image will not display.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.showPassImgNotification(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                When set to true the notification image for the passed validations will display,
+                                 when set to false then the image will not display.
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+        <br />
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.highlightBorder(boolean)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>boolean
+                            </td>
+                            <td>Type: boolean value<br />
+                                When set to true the border of the input element will be highlighted and will be set to red
+                                 with 1px border.<br />
+                                Note: as of now turning this flag on will remove any custom css class that you have applied
+                                 on your input element.
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
         </table>
     </div>
-    
 
 
 
-    
+
+
 
     <script type="text/javascript">
         var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
@@ -494,7 +824,7 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                         }])
                         .addValidator(["salary2"], [{
                             type: ValidationType.Range
-                            , rule: [ 1000, 2000 ]
+                            , rule: [1000, 2000]
                             , message: "Salary should be between $1000 and $2000."
                         }])
                         .addValidator(["email"], [{
