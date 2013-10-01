@@ -100,40 +100,7 @@
             if (this._highlightBackground === true && sourceControl.length > 0) {
                 sourceControl.removeClass();
             }
-        };
-        //Function to show notifications for validation fails
-        this.notifyFail = function (validatorName) {
-            var notificationControl = null;
-            var sourceControl = null;
-
-            notificationControl = $("div[validator='" + validatorName + "']");
-            sourceControl = $("*[validatorName='" + validatorName + "']");
-            //we will check for each notification type and will apply them
-            if (notificationControl.length > 0 && sourceControl.length > 0) {
-                $("#imgFail" + validatorName).css("display", "inline");
-            }
-        };
-        //Function to show notifications for validation passes
-        this.notifyPass = function (validatorName) {
-            var notificationControl = null;
-            var sourceControl = null;
-
-            notificationControl = $("div[validator='" + validatorName + "']");
-            sourceControl = $("*[validatorName='" + validatorName + "']");
-            //we will check for each notification type and will apply them
-            if (notificationControl.length > 0 && sourceControl.length > 0) {
-                $("#imgPass" + validatorName).css("display", "inline");
-            }
-        };
-        //function to reset tooltips
-        this.resetToolTip = function (validatorName) {
-            var control = $("div[validator='" + validatorName + "']");
-            if (control.length > 0) {
-                $(control).unbind("mouseover");
-                $(control).unbind("mouseout");
-                $(control).unbind("mousemove");
-            }
-        };
+        };        
         //Function to apply popup tootip
         this.applyTooltip = function (validatorName) {
             var msgList = this._validators[validatorName]._failedMessages;
@@ -154,15 +121,6 @@
                 tooltipContent = tooltipContent.replace("{{validation-messages}}", messageBody);
 
                 this._tooltipJS.applyTooltip(control, tooltipContent, 14, false);
-            }
-        };
-        //Function to notify border highlighting
-        this.notifyBackgroundHighlight = function (validatorName) {
-            var sourceControl = null;
-            sourceControl = $("*[validatorName='" + validatorName + "']");
-            //we will check for each notification type and will apply them
-            if (sourceControl.length > 0) {
-                $(sourceControl).addClass("validateJSHighlightBackground");
             }
         };
         return this;
@@ -239,10 +197,11 @@
             this._tooltipJS.className = "validateJSToolTip";
 
             this._tooltipContentTemplate += "<table style='text-align:left;font-family:Arial;'>";
-            this._tooltipContentTemplate += "<tr><th style='background-color:#C6E2FF;text-align:center;'>Messages</th></tr>";
+            this._tooltipContentTemplate += "<tr><th colspan='2'style='background-color:#C6E2FF;text-align:center;'>Messages</th></tr>";
             this._tooltipContentTemplate += "{{validation-messages}}";
             this._tooltipContentTemplate += "</table>";
-            this._tooltipMessageTemplate += "<tr><td><span style='font-weight:900;'>&#8226;</span> {{message}}</td></tr>";
+            this._tooltipMessageTemplate += "<tr><td style='padding:1px;'>&#8226;</td><td style='padding:1px;'><span style='font-weight:900;'>";
+            this._tooltipMessageTemplate += "</span> {{message}}</td></tr>";
 
             //we need to add the css class for our validation tooltips
             //to the end of the <head> tag
@@ -328,7 +287,7 @@
                 validatorName = validatorList[i];
                 //first reset all the notifications and tooltips for this validator
                 this.resetNotifications(validatorName);
-                this.resetToolTip(validatorName);
+                resetToolTip(validatorName);
 
                 //validate each validator individually
                 validatorPassed = this.v(validatorName);
@@ -336,7 +295,7 @@
                 //show pass or fail notifications
                 if (!validatorPassed) {
                     if (this._showFailImgNotification == true) {
-                        this.notifyFail(validatorName);
+                        notifyFail(validatorName);
                     }
 
                     if (this._showFailToolTips === true) {
@@ -344,12 +303,12 @@
                     }
 
                     if (this._highlightBackground === true) {
-                        this.notifyBackgroundHighlight(validatorName);
+                        notifyBackgroundHighlight(validatorName);
                     }
                 }
                 else {
                     if (this._showPassImgNotification == true) {
-                        this.notifyPass(validatorName);
+                        notifyPass(validatorName);
                     }
                 }
                 if (isValid === true && this._validators[validatorName]._failedMessages.length > 0) { //we have a failed validation
@@ -384,6 +343,52 @@
             return this;
         },
     };
+
+    //Function to notify border highlighting
+    function notifyBackgroundHighlight(validatorName) {
+        var sourceControl = null;
+        sourceControl = $("*[validatorName='" + validatorName + "']");
+        //we will check for each notification type and will apply them
+        if (sourceControl.length > 0) {
+            $(sourceControl).addClass("validateJSHighlightBackground");
+        }
+    };
+
+    //function to reset tooltips
+    function resetToolTip(validatorName) {
+        var control = $("div[validator='" + validatorName + "']");
+        if (control.length > 0) {
+            $(control).unbind("mouseover");
+            $(control).unbind("mouseout");
+            $(control).unbind("mousemove");
+        }
+    }
+
+    //Function to show notifications for validation fails
+    function notifyFail(validatorName) {
+        var notificationControl = null;
+        var sourceControl = null;
+
+        notificationControl = $("div[validator='" + validatorName + "']");
+        sourceControl = $("*[validatorName='" + validatorName + "']");
+        //we will check for each notification type and will apply them
+        if (notificationControl.length > 0 && sourceControl.length > 0) {
+            $("#imgFail" + validatorName).css("display", "inline");
+        }
+    }
+
+    //Function to show notifications for validation passes
+    function notifyPass(validatorName) {
+        var notificationControl = null;
+        var sourceControl = null;
+
+        notificationControl = $("div[validator='" + validatorName + "']");
+        sourceControl = $("*[validatorName='" + validatorName + "']");
+        //we will check for each notification type and will apply them
+        if (notificationControl.length > 0 && sourceControl.length > 0) {
+            $("#imgPass" + validatorName).css("display", "inline");
+        }
+    }
 
     //validation functions
     function validateRequired(controlValue) {
@@ -660,10 +665,6 @@
         $("#divToolTip").css("display", "none");
         $("#divToolTipTriangle").css("display", "none");
     };
-    //we only need this tooltip library for internal validation use
-    //w["ToolTipJS"] = toolTipJS;
-
-    //------------------------------------------
 
     w["ValidationManager"] = validationManager;
     w["ValidationType"] = validationType;
