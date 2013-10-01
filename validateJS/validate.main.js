@@ -97,7 +97,7 @@
                 $("#imgPass" + validatorName).css("display", "none");
                 this._validators[validatorName]._isNotified = false;
             }
-            if (this._highlightBorder === true && sourceControl.length > 0) {
+            if (this._highlightBackground === true && sourceControl.length > 0) {
                 sourceControl.removeClass();
             }
         };

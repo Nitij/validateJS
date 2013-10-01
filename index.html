@@ -92,6 +92,9 @@
     <div style="text-align: center;">
         <img src="validateJS.png" />
     </div>
+    <div style="text-align:center;">
+        (This page is still under contruction...!!!)
+    </div>
     <hr />
     <div id="divMain" class="divMain">
         <span class="extraLargeSpan">validateJS is a lightweight javascript library that helps to easily setup a variety of client side 
@@ -120,30 +123,34 @@
         <table class="regularTable">
             <tr>
                 <td>
-                    <table style="width:100%;">
+                    <table style="width: 100%;">
                         <tr>
-                            <td style="width:50%;">
-                                <label for ="txtDemoFirstName">First Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td style="width: 50%;">
+                                <label for="txtDemoFirstName">First Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input id="txtDemoFirstName" maxlength="20" validatorname="demoFirstName" />
                                 &nbsp;<div validator="demoFirstName"></div>
-                                <br /><br />
-                                <label for ="txtDemoFirstName">Last Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br />
+                                <br />
+                                <label for="txtDemoFirstName">Last Name:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input id="Text1" maxlength="20" validatorname="demoLastName" />
                                 &nbsp;<div validator="demoLastName"></div>
-                                <br /><br />
-                                <label for ="txtDemoEmail">Email Address:</label>&nbsp;
+                                <br />
+                                <br />
+                                <label for="txtDemoEmail">Email Address:</label>&nbsp;
                                 <input id="txtDemoEmail" maxlength="20" validatorname="demoEmail" />
                                 &nbsp;<div validator="demoEmail"></div>
-                                <br /><br />
-                                <label for ="txtDemoPhone">Phone Number:</label>
+                                <br />
+                                <br />
+                                <label for="txtDemoPhone">Phone Number:</label>
                                 <input id="txtDemoPhone" maxlength="20" validatorname="demoPhone" />
                                 &nbsp;<div validator="demoPhone"></div>
-                                <br /><br />
+                                <br />
+                                <br />
                                 <input type="button" value="Submit!!" onclick="ValidateDemoForm(); return true;" />
                                 (hover over the notification icons to see the validation messages)
                             </td>
-                            <td style="width:50%;">
-                                <div style="font-family:Georgia;" id="divDemoFormSummary"></div>
+                            <td style="width: 50%;">
+                                <div style="font-family: Georgia;" id="divDemoFormSummary"></div>
                             </td>
                         </tr>
                     </table>
@@ -455,8 +462,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             </tr>
         </table>
 
-
-
         <br />
         <table class="regularTable">
             <tr>
@@ -541,12 +546,10 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                             </td>
                         </tr>
                     </table>
-
                     <br />
                     <span class="largerSpan">Validation Types
                     </span>
                     <br />
-
                     <table class="parameterTable">
                         <tr>
                             <th style="width: 25%;">Validation Type
@@ -645,7 +648,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         </table>
         <br />
 
-
         <table class="regularTable">
             <tr>
                 <td>
@@ -674,8 +676,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         </table>
         <br />
 
-
-
         <table class="regularTable">
             <tr>
                 <td>
@@ -702,7 +702,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             </tr>
         </table>
         <br />
-
 
         <table class="regularTable">
             <tr>
@@ -731,7 +730,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         </table>
         <br />
 
-
         <table class="regularTable">
             <tr>
                 <td>
@@ -757,8 +755,6 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             </tr>
         </table>
         <br />
-
-
 
         <table class="regularTable">
             <tr>
@@ -818,7 +814,7 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         <table class="regularTable">
             <tr>
                 <td>
-                    <span class="largerSpan">.highlightBorder(boolean)
+                    <span class="largerSpan">.highlightBackground(boolean)
                     </span>
                     <br />
                     <table class="parameterTable">
@@ -832,8 +828,7 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                             <td>boolean
                             </td>
                             <td>Type: boolean value<br />
-                                When set to true the border of the input element will be highlighted and will be set to red
-                                 with 1px border.<br />
+                                When set to true the background of the input element will be highlighted and will be set to #FFE4E1.<br />
                                 Note: as of now turning this flag on will remove any custom css class that you have applied
                                  on your input element.
                             </td>
@@ -843,12 +838,43 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                 </td>
             </tr>
         </table>
+        <br />
+
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.validateOnTextChange(f, onComplete)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>f
+                            </td>
+                            <td>Type: boolean value<br />
+                                When set to true the validations for all the validators will fire on the input change event.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onComplete
+                            </td>
+                            <td>Type: <i>function name</i><br />
+                                This function will be called after the input elements are done validating. A list of
+                                 validator names which were originally passed to the .validate() function will
+                                 be supplied as a parameter to this function.
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
     </div>
-
-
-
-
-
 
     <script type="text/javascript">
         var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
@@ -919,6 +945,7 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                             , message: "Phone number minimum length can only be upto 6."
                         }])
                         .validateOnTextChange(true, SetDemoSummary)
+                        .highlightBackground(true)
                         .initialize();
 
         function ValidateName1() {
