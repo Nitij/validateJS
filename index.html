@@ -516,6 +516,47 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
         <table class="regularTable">
             <tr>
                 <td>
+                    <span class="largerSpan">.validate(validatorList)
+                    </span>
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>validatorList
+                            </td>
+                            <td>Type: An array of validator names<br />
+                                All the validators that you pass with this parameter
+                                 in a list format will be validated according to their collection of rules. After
+                                 the validation is complete the notifications have been enabled will display on 
+                                the UI.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.validateAll()
+                    </span>
+                    <br />
+                    Validates all the validators that are currently been added.
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <table class="regularTable">
+            <tr>
+                <td>
                     <span class="largerSpan">.addValidator(validators, params)
                     </span>
                     <br />
