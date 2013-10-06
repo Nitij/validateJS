@@ -346,7 +346,7 @@
             var results = [];
             var validators = this._validatorNames;
             var i = 0;
-            if (validatorList === null || validatorList === undefined) {
+            if (validatorList === null || validatorList === undefined || validatorList.length == 0) {
                 for (; i < validators.length; i++) {
                     $.merge(results, this._validators[validators[i]]._failedMessages);
                 }
