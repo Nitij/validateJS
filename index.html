@@ -3,90 +3,18 @@
 <head>
     <title>validateJS</title>
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <script>
+        !function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id; js.src = p + '://platform.twitter.com/widgets.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, 'script', 'twitter-wjs');       
+    </script>
     <script type="text/javascript" src="validateJS/validate.main.js"></script>
-    <style type="text/css">
-        .divMain {
-            text-align: center;
-        }
-
-        .regularTable {
-            width: 80%;
-            text-align: left;
-            border: 1px solid black;
-            margin-left: auto;
-            margin-right: auto;
-            -moz-border-radius: 16px;
-            -webkit-border-radius: 16px;
-            border-radius: 16px;
-            padding: 10px;
-        }
-
-        .parameterTable {
-            width: 100%;
-            font-family: Georgia;
-            font-size: medium;
-        }
-
-            .parameterTable th {
-                background-color: lightgray;
-                font-family: Georgia;
-                font-size: medium;
-                font-weight: 600;
-            }
-
-            .parameterTable td {
-                font-family: Georgia;
-                font-size: medium;
-                border-bottom: 2px solid black;
-                padding: 10px;
-            }
-
-        pre {
-            font-size: 100%;
-            white-space: pre;
-            white-space: pre-wrap;
-            white-space: -moz-pre-wrap;
-            white-space: -o-pre-wrap;
-            width: auto;
-            display: block;
-            clear: both;
-            color: #555555;
-            background: #f4f4f4;
-            border: solid 1px #e1e1e1;
-        }
-
-        code {
-            font-size: 100%;
-            font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-            display: inline;
-            color: #555555;
-            padding: 1em 1em;
-            background: #f4f4f4;
-        }
-
-        .extraLargeSpan {
-            font-size: xx-large;
-            font-family: Georgia;
-        }
-
-        .largerSpan {
-            font-size: x-large;
-            font-family: Georgia;
-            text-align: left;
-        }
-
-        .LightLargerSpan {
-            font-weight: 500;
-            font-size: medium;
-            font-family: Georgia;
-            text-align: left;
-        }
-
-        .demoLabel {
-            font-family: Arial;
-            font-size: large;
-        }
-    </style>
+    <link rel="stylesheet" href="style/style.css" />
 </head>
 <body>
     <div style="text-align: center;">
@@ -94,6 +22,18 @@
     </div>
     <div style="text-align:center;">
         (This page is still under contruction, but you can find it useful...!!!)
+    </div>
+    <div style="text-align:center;">
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=validateJS&type=watch&count=true&size=large"
+             height="30" width="170" frameborder="0" scrolling="0" style="width:170px; height: 30px;" allowTransparency="true"></iframe>
+        
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=validateJS&type=fork&count=true&size=large"
+             height="30" width="170" frameborder="0" scrolling="0" style="width:170px; height: 30px;" allowTransparency="true"></iframe>
+
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&type=follow&count=true&size=large" height="30" width="240"
+             frameborder="0" scrolling="0" style="width:240px; height: 30px;" allowTransparency="true"></iframe>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/Nitij/validateJS" data-size="large">Tweet</a>
+        <a href="https://twitter.com/_nitij" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @_nitij</a>
     </div>
     <hr />
     <div id="divMain" class="divMain">
@@ -935,10 +875,57 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                 </td>
             </tr>
         </table>
+        <br />
+        <table class="regularTable">
+            <tr>
+                <td>
+                    <span class="largerSpan">.isValid(validatorList)
+                    </span>
+                    <br />
+                    <span class="LightLargerSpan">Checks if any validator is correctly validated or not.</span> 
+                    <br />
+                    <table class="parameterTable">
+                        <tr>
+                            <th style="width: 25%;">Parameter Name
+                            </th>
+                            <th style="width: 75%;">Description
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>validatorList
+                            </td>
+                            <td>Type: Array<br />
+                                Returns <i>false</i> if there is any failed validation message after the last
+                                 validation run for the specified validators, else returns <i>true</i>.<br />
+                                If validatorList is <i>empty</i> or <i>undefined</i> then the function checks 
+                                for all the available validators.
+                            </td>
+                        </tr>                        
+                    </table>
+
+                </td>
+            </tr>
+        </table>
     </div>
     <br /><br />
     <!-- Footer -->
     <hr />
+    <div style="text-align:center;">
+        
+        
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=validateJS&type=watch&count=true&size=large"
+             height="30" width="170" frameborder="0" scrolling="0" style="width:170px; height: 30px;" allowTransparency="true"></iframe>
+        
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=validateJS&type=fork&count=true&size=large"
+             height="30" width="170" frameborder="0" scrolling="0" style="width:170px; height: 30px;" allowTransparency="true"></iframe>
+
+        <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&type=follow&count=true&size=large" height="30" width="240"
+             frameborder="0" scrolling="0" style="width:240px; height: 30px;" allowTransparency="true"></iframe>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/Nitij/validateJS" data-size="large">Tweet</a>
+        <a href="https://twitter.com/_nitij" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @_nitij</a>
+        <br />
+        © Nitij Jhangra 2013
+    </div>
 
     <script type="text/javascript">
         var emailRegExp = "^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";

@@ -1,0 +1,81 @@
+.divMain {
+    text-align: center;
+}
+
+.regularTable {
+    width: 80%;
+    text-align: left;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.parameterTable {
+    width: 100%;
+    font-family: Georgia;
+    font-size: medium;
+}
+
+    .parameterTable th {
+        background-color: lightgray;
+        font-family: Georgia;
+        font-size: medium;
+        font-weight: 600;
+    }
+
+    .parameterTable td {
+        font-family: Georgia;
+        font-size: medium;
+        border-bottom: 2px solid black;
+        padding: 10px;
+    }
+
+pre {
+    font-size: 100%;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    width: auto;
+    display: block;
+    clear: both;
+    color: #555555;
+    background: #f4f4f4;
+    border: solid 1px #e1e1e1;
+}
+
+code {
+    font-size: 100%;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    display: inline;
+    color: #555555;
+    padding: 1em 1em;
+    background: #f4f4f4;
+}
+
+.extraLargeSpan {
+    font-size: xx-large;
+    font-family: Georgia;
+}
+
+.largerSpan {
+    font-size: x-large;
+    font-family: Georgia;
+    text-align: left;
+}
+
+.LightLargerSpan {
+    font-weight: 500;
+    font-size: medium;
+    font-family: Georgia;
+    text-align: left;
+}
+
+.demoLabel {
+    font-family: Arial;
+    font-size: large;
+}
