@@ -342,6 +342,22 @@
             this._validateOnTextChange = { value: f, onComplete: onComplete };
             return this;
         },
+        isValid: function (validatorList) { 
+            var results = [];
+            var validators = this._validatorNames;
+            var i = 0;
+            if (validatorList === null || validatorList === undefined || validatorList.length == 0) {
+                for (; i < validators.length; i++) {
+                    $.merge(results, this._validators[validators[i]]._failedMessages);
+                }
+            }
+            else {
+                for (; i < validatorList.length; i++) {
+                    $.merge(results, this._validators[validatorList[i]]._failedMessages);
+                }
+            }
+            return !(results.length > 0);
+        }
     };
 
     //Function to notify border highlighting
