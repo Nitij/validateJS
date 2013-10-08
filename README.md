@@ -6,4 +6,9 @@ This library cuts short your coding time to set up all those pesky validations v
 
 http://nitij.github.io/validateJS/
 
+If you find any bugs or issues feel free to log them here:
+https://github.com/Nitij/validateJS/issues
+
+If you find this useful then please like this repo, or fork it to code this in your own way.
+
 
