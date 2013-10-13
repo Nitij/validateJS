@@ -14,115 +14,6 @@
         this._tooltipJS = new toolTipJS();
         this._tooltipContentTemplate = "";
         this._tooltipMessageTemplate = "";
-
-        //adds a failed validation to the validation results list
-        this.addFailedValidation = function (validatorName, inputControl, type, message) {
-            this._validators[validatorName]._failedMessages
-                .push(new validatorResult(validatorName, inputControl, type, message));
-        };
-        ///Function to validate a particular validator
-        this.v = function (validatorName) {
-            var isValid = true;
-            var validatorPassed = true;
-            var type = null;
-            var rule = null;
-            var message = null;
-            var inputControl = null;
-            var controlValue = null;
-            var validateFunc = null;
-            var params = this._validators[validatorName]._params;
-            var i = 0, j = 0;
-            var failedCount = null;
-
-            //lets first clear the current failed validation messages
-            this._validators[validatorName]._failedMessages = [];
-            for (; i < params.length; i++) {
-                type = params[i].type;
-                rule = params[i].rule;
-                message = params[i].message;
-                inputControl = $("*[validatorName = '" + validatorName + "']");
-                controlValue = $(inputControl).val();
-
-                switch (type) {
-                    case validationType.Required:
-                        validateFunc = validateRequired;
-                        break;
-                    case validationType.Compare:
-                        validateFunc = validateCompare;
-                        break;
-                    case validationType.Range:
-                        validateFunc = validateRange;
-                        break;
-                    case validationType.RegularExpression:
-                        validateFunc = validateRegExp;
-                        break;
-                    case validationType.Custom:
-                        validateFunc = validateCustom;
-                        break;
-                    case validationType.MinLength:
-                        validateFunc = validateMinLength;
-                        break;
-                    case validationType.MaxLength:
-                        validateFunc = validateMaxLength;
-                        break;
-                    case validationType.Alphabets:
-                        validateFunc = validateAlphabets;
-                        break;
-                    case validationType.AlphaNumeric:
-                        validateFunc = validateAlphaNumeric;
-                        break;
-                    case validationType.Numeric:
-                        validateFunc = validateNumeric;
-                        break;
-                }
-
-                isValid = validateFunc(controlValue, rule);
-                if (!isValid) {
-                    validatorPassed = false;
-                    this.addFailedValidation(validatorName, inputControl, type, message);
-                }
-            }
-            return validatorPassed;
-        };
-        //reset notifications
-        this.resetNotifications = function (validatorName) {
-            var imgFail = null;
-            var imgPass = null;
-            var notificationControl = null;
-            var sourceControl = null;
-            sourceControl = $("*[validatorName='" + validatorName + "']");
-            notificationControl = $("div[validator='" + validatorName + "']");
-            if (notificationControl.length > 0) {
-                $("#imgFail" + validatorName).css("display", "none");
-                $("#imgPass" + validatorName).css("display", "none");
-                this._validators[validatorName]._isNotified = false;
-            }
-            if (this._highlightBackground === true && sourceControl.length > 0) {
-                sourceControl.removeClass();
-            }
-        };        
-        //Function to apply popup tootip
-        this.applyTooltip = function (validatorName) {
-            var msgList = this._validators[validatorName]._failedMessages;
-            var control = null;
-            var divToolTip = null;
-            var messageBody = [];
-            var tooltipContent = this._tooltipContentTemplate;
-            var msgTemplate = this._tooltipMessageTemplate;
-            var i = 0;
-            control = $("div[validator='" + validatorName + "']");
-            if (control.length > 0) {
-                i = 0;
-                //lets build our tooltip content
-                for (; i < msgList.length; i++) {
-                    messageBody.push(msgTemplate.replace("{{message}}", msgList[i].message));
-                }
-                messageBody = messageBody.join('');
-                tooltipContent = tooltipContent.replace("{{validation-messages}}", messageBody);
-
-                this._tooltipJS.applyTooltip(control, tooltipContent, 14, false);
-            }
-        };
         return this;
     };
     validationManager.prototype = {
@@ -286,11 +177,11 @@
             for (; i < validatorList.length; i++) {
                 validatorName = validatorList[i];
                 //first reset all the notifications and tooltips for this validator
-                this.resetNotifications(validatorName);
+                resetNotifications(validatorName, this);
                 resetToolTip(validatorName);
 
                 //validate each validator individually
-                validatorPassed = this.v(validatorName);
+                validatorPassed = v(validatorName, this);
 
                 //show pass or fail notifications
                 if (!validatorPassed) {
@@ -299,7 +190,7 @@
                     }
 
                     if (this._showFailToolTips === true) {
-                        this.applyTooltip(validatorName);
+                        applyTooltip(validatorName, this);
                     }
 
                     if (this._highlightBackground === true) {
@@ -359,6 +250,118 @@
             return !(results.length > 0);
         }
     };
+
+    //adds a failed validation to the validation results list
+    function addFailedValidation(validatorName, inputControl, type, message, vManager) {
+        vManager._validators[validatorName]._failedMessages
+            .push(new validatorResult(validatorName, inputControl, type, message));
+    }
+
+    //reset notifications
+    function resetNotifications(validatorName, vManager) {
+        var imgFail = null;
+        var imgPass = null;
+        var notificationControl = null;
+        var sourceControl = null;
+        sourceControl = $("*[validatorName='" + validatorName + "']");
+        notificationControl = $("div[validator='" + validatorName + "']");
+        if (notificationControl.length > 0) {
+            $("#imgFail" + validatorName).css("display", "none");
+            $("#imgPass" + validatorName).css("display", "none");
+            vManager._validators[validatorName]._isNotified = false;
+        }
+        if (vManager._highlightBackground === true && sourceControl.length > 0) {
+            sourceControl.removeClass();
+        }
+    }
+
+    //Function to apply popup tootip
+    function applyTooltip(validatorName, vManager) {
+        var msgList = vManager._validators[validatorName]._failedMessages;
+        var control = null;
+        var divToolTip = null;
+        var messageBody = [];
+        var tooltipContent = vManager._tooltipContentTemplate;
+        var msgTemplate = vManager._tooltipMessageTemplate;
+        var i = 0;
+        control = $("div[validator='" + validatorName + "']");
+        if (control.length > 0) {
+            i = 0;
+            //lets build our tooltip content
+            for (; i < msgList.length; i++) {
+                messageBody.push(msgTemplate.replace("{{message}}", msgList[i].message));
+            }
+            messageBody = messageBody.join('');
+            tooltipContent = tooltipContent.replace("{{validation-messages}}", messageBody);
+
+            vManager._tooltipJS.applyTooltip(control, tooltipContent, 14, false);
+        }
+    }
+
+    ///Function to validate a particular validator
+    function v(validatorName, vManager) {
+        var isValid = true;
+        var validatorPassed = true;
+        var type = null;
+        var rule = null;
+        var message = null;
+        var inputControl = null;
+        var controlValue = null;
+        var validateFunc = null;
+        var params = vManager._validators[validatorName]._params;
+        var i = 0, j = 0;
+        var failedCount = null;
+
+        //lets first clear the current failed validation messages
+        vManager._validators[validatorName]._failedMessages = [];
+        for (; i < params.length; i++) {
+            type = params[i].type;
+            rule = params[i].rule;
+            message = params[i].message;
+            inputControl = $("*[validatorName = '" + validatorName + "']");
+            controlValue = $(inputControl).val();
+
+            switch (type) {
+                case validationType.Required:
+                    validateFunc = validateRequired;
+                    break;
+                case validationType.Compare:
+                    validateFunc = validateCompare;
+                    break;
+                case validationType.Range:
+                    validateFunc = validateRange;
+                    break;
+                case validationType.RegularExpression:
+                    validateFunc = validateRegExp;
+                    break;
+                case validationType.Custom:
+                    validateFunc = validateCustom;
+                    break;
+                case validationType.MinLength:
+                    validateFunc = validateMinLength;
+                    break;
+                case validationType.MaxLength:
+                    validateFunc = validateMaxLength;
+                    break;
+                case validationType.Alphabets:
+                    validateFunc = validateAlphabets;
+                    break;
+                case validationType.AlphaNumeric:
+                    validateFunc = validateAlphaNumeric;
+                    break;
+                case validationType.Numeric:
+                    validateFunc = validateNumeric;
+                    break;
+            }
+
+            isValid = validateFunc(controlValue, rule);
+            if (!isValid) {
+                validatorPassed = false;
+                addFailedValidation(validatorName, inputControl, type, message, vManager);
+            }
+        }
+        return validatorPassed;
+    }
 
     //Function to notify border highlighting
     function notifyBackgroundHighlight(validatorName) {
