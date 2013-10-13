@@ -86,6 +86,10 @@
                                 &nbsp;<div validator="demoPhone"></div>
                                 <br />
                                 <br />
+                                <label for="chkCorrectInfo">I agree that the information that I have provided is correct</label>
+                                <input type="checkbox" id="chkCorrectInfo" validatorname="demoCorrectInfo" />
+                                &nbsp;<div validator="demoCorrectInfo"></div>
+                                <br /><br />
                                 <input type="button" value="Submit!!" onclick="ValidateDemoForm(); return true;" />
                                 (hover over the notification icons to see the validation messages)
                             </td>
@@ -995,6 +999,10 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
                             , rule: [6]
                             , message: "Phone number minimum length can only be upto 6."
                         }])
+                        .addValidator(["demoCorrectInfo"], [{
+                            type: ValidationType.Required
+                            , message: "You must agree that the information that you have provided is correct."
+                        }])
                         .validateOnTextChange(true, SetDemoSummary)
                         .highlightBackground(true)
                         .initialize();
@@ -1024,7 +1032,7 @@ vManager.addValidator(["salary"], [{ type: ValidationType.Required
             SetSummary("salary4Summary", "salary4");
         }
         function ValidateDemoForm() {
-            vManager3.validate(["demoFirstName", "demoLastName", "demoEmail", "demoPhone"]);
+            vManager3.validate(["demoFirstName", "demoLastName", "demoEmail", "demoPhone", "demoCorrectInfo"]);
             SetDemoSummary();
         }
         function CustomSalaryValidation(s) {
