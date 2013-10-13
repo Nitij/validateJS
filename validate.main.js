@@ -319,8 +319,11 @@
             rule = params[i].rule;
             message = params[i].message;
             inputControl = $("*[validatorName = '" + validatorName + "']");
-            controlValue = $(inputControl).val();
-
+            //check if input control is checkbox or not
+            if (inputControl.is(':checkbox'))
+                controlValue = inputControl.prop('checked') //if checkbox then set value to true/false
+            else
+                controlValue = inputControl.val();
             switch (type) {
                 case validationType.Required:
                     validateFunc = validateRequired;
@@ -411,7 +414,11 @@
 
     //validation functions
     function validateRequired(controlValue) {
-        if (controlValue === null
+        if (controlValue === true) //for checkbox
+            return true;
+        else if (controlValue === false) //for checkbox
+            return false
+        else if (controlValue === null
             || controlValue === undefined
             || controlValue === "") {
             return false;
