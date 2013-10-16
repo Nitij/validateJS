@@ -154,7 +154,7 @@
             var results = [];
             var validators = this._validatorNames;
             var i = 0;
-            if (validator === null || validator === undefined) {
+            if (isNullOrUndefined(validator)) {
                 for (; i < validators.length; i++) {
                     $.merge(results, this._validators[validators[i]]._failedMessages);
                 }
@@ -237,7 +237,7 @@
             var results = [];
             var validators = this._validatorNames;
             var i = 0;
-            if (validatorList === null || validatorList === undefined || validatorList.length == 0) {
+            if (isNullOrUndefined(validatorList) || validatorList.length == 0) {
                 for (; i < validators.length; i++) {
                     $.merge(results, this._validators[validators[i]]._failedMessages);
                 }
@@ -410,6 +410,11 @@
         if (notificationControl.length > 0 && sourceControl.length > 0) {
             $("#imgPass" + validatorName).css("display", "inline");
         }
+    }
+
+    //retruns true if the value is null or undefined
+    function isNullOrUndefined(value) {
+        return (value === null || value == undefined);
     }
 
     //validation functions
