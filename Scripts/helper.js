@@ -13,7 +13,8 @@ var messageCollection = {
     onlyNumbers: "Only numbers are allowed in this field",
     firstNameRequired: "Please enter your first name.",
     lastNameRequired: "Please enter your last name.",
-    onlyAlphabets: "Only alphabets are allowed in the last name.",
+    onlyAlphabetsFirstName: "Only alphabets are allowed in the first name.",
+    onlyAlphabetsLastName: "Only alphabets are allowed in the last name.",
     emailMaxLength: "The maximum length for email id is 20 characters.",
     phoneMaxLength: "Phone number maximum length can only be upto 15.",
     phoneMinLength: "Phone number minimum length can only be upto 6.",
@@ -59,9 +60,9 @@ $(document).ready(function () {
 
     vManager3 = new ValidationManager()
                 .addValidator(["demoFirstName"], [{ type: ValidationType.Required, message: messageCollection.firstNameRequired },
-                { type: ValidationType.Alphabets, message: messageCollection.onlyAlphabets }])
+                { type: ValidationType.Alphabets, message: messageCollection.onlyAlphabetsFirstName }])
                 .addValidator(["demoLastName"], [{ type: ValidationType.Required, message: messageCollection.lastNameRequired },
-                { type: ValidationType.Alphabets, message: messageCollection.onlyAlphabets }])
+                { type: ValidationType.Alphabets, message: messageCollection.onlyAlphabetsLastName }])
                 .addValidator(["demoEmail"], [{
                     type: ValidationType.RegularExpression
                     , rule: emailRegExp
