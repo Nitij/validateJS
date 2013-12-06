@@ -18,15 +18,15 @@
     };
     validationManager.prototype = {
         initialize: function () {
-            var notificationControl = null;
-            var imgFail = null, imgPass = null;
-            var validatorName = null;
-            var validators = this._validatorNames;
-            var toolTipCssClass = [], tooltipTriangle = "";
-            var toolTipLeftTriangle = "", toolTipRightTriangle = "";
-            var backgroundHighlightCss = ".validateJSHighlightBackground {background-color:#FFE4E1;}";
-            var i = 0;
-            var changeEventDelegate = null; //reusable delegate
+            var notificationControl = null,
+                imgFail = null, imgPass = null,
+                validatorName = null,
+                validators = this._validatorNames,
+                toolTipCssClass = [], tooltipTriangle = "",
+                toolTipLeftTriangle = "", toolTipRightTriangle = "",
+                backgroundHighlightCss = ".validateJSHighlightBackground {background-color:#FFE4E1;}",
+                i = 0,
+                changeEventDelegate = null; //reusable delegate
 
             //lets preload the fail and pass images for all validators
             //if applicable
@@ -151,9 +151,9 @@
             return this;
         },
         getValidationResults: function (validator) {
-            var results = [];
-            var validators = this._validatorNames;
-            var i = 0;
+            var results = [],
+                validators = this._validatorNames,
+                i = 0;
             if (isNullOrUndefined(validator)) {
                 for (; i < validators.length; i++) {
                     $.merge(results, this._validators[validators[i]]._failedMessages);
@@ -165,10 +165,10 @@
             return results;
         },
         validate: function (validatorList) {
-            var isValid = true;
-            var validatorName = null;
-            var validatorPassed = true;
-            var i = 0;
+            var isValid = true,
+                validatorName = null,
+                validatorPassed = true,
+                i = 0;
 
             if (validatorList.type && validatorList.type === "change") {
                 validatorList = validatorList.data.validatorList;
@@ -234,9 +234,9 @@
             return this;
         },
         isValid: function (validatorList) { 
-            var results = [];
-            var validators = this._validatorNames;
-            var i = 0;
+            var results = [],
+                validators = this._validatorNames,
+                i = 0;
             if (isNullOrUndefined(validatorList) || validatorList.length == 0) {
                 for (; i < validators.length; i++) {
                     $.merge(results, this._validators[validators[i]]._failedMessages);
@@ -259,10 +259,10 @@
 
     //reset notifications
     function resetNotifications(validatorName, vManager) {
-        var imgFail = null;
-        var imgPass = null;
-        var notificationControl = null;
-        var sourceControl = null;
+        var imgFail = null,
+            imgPass = null,
+            notificationControl = null,
+            sourceControl = null;
         sourceControl = $("*[validatorName='" + validatorName + "']");
         notificationControl = $("div[validator='" + validatorName + "']");
         if (notificationControl.length > 0) {
@@ -277,13 +277,14 @@
 
     //Function to apply popup tootip
     function applyTooltip(validatorName, vManager) {
-        var msgList = vManager._validators[validatorName]._failedMessages;
-        var control = null;
-        var divToolTip = null;
-        var messageBody = [];
-        var tooltipContent = vManager._tooltipContentTemplate;
-        var msgTemplate = vManager._tooltipMessageTemplate;
-        var i = 0;
+        var msgList = vManager._validators[validatorName]._failedMessages,
+            control = null,
+            divToolTip = null,
+            messageBody = [],
+            tooltipContent = vManager._tooltipContentTemplate,
+            msgTemplate = vManager._tooltipMessageTemplate,
+            i = 0;
+
         control = $("div[validator='" + validatorName + "']");
         if (control.length > 0) {
             i = 0;
@@ -300,17 +301,17 @@
 
     ///Function to validate a particular validator
     function v(validatorName, vManager) {
-        var isValid = true;
-        var validatorPassed = true;
-        var type = null;
-        var rule = null;
-        var message = null;
-        var inputControl = null;
-        var controlValue = null;
-        var validateFunc = null;
-        var params = vManager._validators[validatorName]._params;
-        var i = 0, j = 0;
-        var failedCount = null;
+        var isValid = true,
+            validatorPassed = true,
+            type = null,
+            rule = null,
+            message = null,
+            inputControl = null,
+            controlValue = null,
+            validateFunc = null,
+            params = vManager._validators[validatorName]._params,
+            i = 0, j = 0,
+            failedCount = null;
 
         //lets first clear the current failed validation messages
         vManager._validators[validatorName]._failedMessages = [];
@@ -388,8 +389,8 @@
 
     //Function to show notifications for validation fails
     function notifyFail(validatorName) {
-        var notificationControl = null;
-        var sourceControl = null;
+        var notificationControl = null,
+            sourceControl = null;
 
         notificationControl = $("div[validator='" + validatorName + "']");
         sourceControl = $("*[validatorName='" + validatorName + "']");
@@ -401,8 +402,8 @@
 
     //Function to show notifications for validation passes
     function notifyPass(validatorName) {
-        var notificationControl = null;
-        var sourceControl = null;
+        var notificationControl = null,
+            sourceControl = null;
 
         notificationControl = $("div[validator='" + validatorName + "']");
         sourceControl = $("*[validatorName='" + validatorName + "']");
@@ -434,8 +435,8 @@
     }
     //function to check compare field validators
     function validateCompare(controlValue, rule) {
-        var type = rule.compareType;
-        var value = rule.value;
+        var type = rule.compareType,
+            value = rule.value;
         if (controlValue.length === 0 || !isNumber(controlValue)) { return false; }
         if (controlValue.length > 0) {
             switch (type) {
@@ -572,9 +573,9 @@
         //distance = Distance between the tooltip and the source control.
         //*************
         this.applyTooltip = function (sourceControl, content, distance, showAtPointer) {
-            var divToolTip = null, divToolTipTriangle = null;
-            var showTooltipDelegate = null;
-            var hideTooltipDelegate = null;
+            divToolTip = null, divToolTipTriangle = null,
+                showTooltipDelegate = null,
+                hideTooltipDelegate = null;
             //var sourceControl = $("#" + sourceControlId);
             var params = null;
             divToolTip = $("#divToolTip");
@@ -626,23 +627,21 @@
     //the tooltip div.
     //*************
     function showToolTip(e) {
-        var i = 0;
-        var showAtPointer = e.data.showAtPointer;
-        var sourceControl = e.data.sourceControl;
-        var content = e.data.content;
-        var divToolTip = $("#divToolTip");
-        var divToolTipTriangle = $("#divToolTipTriangle");
-        var targetLeft = null, targetTop = null; //top and left of the tooltip div
-        var tooltipHeight = null, tooltipWidth = null;
-        var srcWidth = sourceControl[0].firstChild.clientWidth;
-        var srcHeight = sourceControl[0].firstChild.clientHeight;
-        var top = sourceControl.offset().top;
-        var left = sourceControl.offset().left;
-        var right = sourceControl.offset().left + srcWidth;
-        var bottom = sourceControl.offset().top + srcHeight;
-
-
-        var distance = e.data.distance;
+        var i = 0,
+            showAtPointer = e.data.showAtPointer,
+            sourceControl = e.data.sourceControl,
+            content = e.data.content,
+            divToolTip = $("#divToolTip"),
+            divToolTipTriangle = $("#divToolTipTriangle"),
+            targetLeft = null, targetTop = null, //top and left of the tooltip div
+            tooltipHeight = null, tooltipWidth = null,
+            srcWidth = sourceControl[0].firstChild.clientWidth,
+            srcHeight = sourceControl[0].firstChild.clientHeight,
+            top = sourceControl.offset().top,
+            left = sourceControl.offset().left,
+            right = sourceControl.offset().left + srcWidth,
+            bottom = sourceControl.offset().top + srcHeight,
+            distance = e.data.distance;
 
         //remove any previous class
         divToolTip.removeClass();
