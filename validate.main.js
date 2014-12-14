@@ -333,7 +333,6 @@
         if (control.length > 0) {
             i = 0;
             //lets build our tooltip content
-            debugger;
             for (; i < msgList.length; i++) {
                 messageBody.push(msgTemplate.replace("{{message}}", msgList[i].message));
             }
